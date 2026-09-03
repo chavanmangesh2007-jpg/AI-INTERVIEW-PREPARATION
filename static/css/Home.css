@@ -346,6 +346,11 @@
      color: #f59e0b !important;
  }
 
+ .cyan {
+     background: rgba(6, 182, 212, 0.1) !important;
+     color: #06b6d4 !important;
+ }
+
  .stat-box h2 {
      font-size: 34px;
      color: #fff;
@@ -390,6 +395,11 @@
      box-shadow: 0 10px 25px rgba(212, 175, 55, .05);
      border: 0.125em solid transparent;
      transition: .3s;
+ }
+
+ .card:hover {
+     border-color: rgba(212, 175, 55, 0.4);
+     transform: translateY(-5px);
  }
 
 
