@@ -92,10 +92,11 @@ def Signup(request):
             user.first_name = fullname
             user.save()
 
-        # Create Profile
-        UserProfile.objects.create(user=user, full_name=fullname or username)
+        # Create Profile safely
+        UserProfile.objects.get_or_create(user=user, defaults={'full_name': fullname or username})
 
-        auth_login(request, user)
+        # Explicitly set authentication backend to persist login session across protected views
+        auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         request.session['is_new_user'] = True
         messages.success(request, f"Welcome to AI Interview Assistant, {user.first_name or user.username}!")
         return redirect("dashboard")
