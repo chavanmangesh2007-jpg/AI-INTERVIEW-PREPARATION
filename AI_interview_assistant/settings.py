@@ -81,12 +81,28 @@ WSGI_APPLICATION = 'AI_interview_assistant.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if os.getenv('VERCEL') or os.environ.get('VERCEL_ENV'):
+    import shutil
+    tmp_db = Path('/tmp/db.sqlite3')
+    orig_db = BASE_DIR / 'db.sqlite3'
+    if orig_db.exists() and not tmp_db.exists():
+        try:
+            shutil.copyfile(orig_db, tmp_db)
+        except Exception:
+            pass
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': tmp_db,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

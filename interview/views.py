@@ -28,14 +28,19 @@ except ImportError:
 
 def home(request):
     """Landing Page"""
-    user_count = User.objects.count()
-    interview_count = InterviewSession.objects.count()
-    
-    # Calculate success rate based on interviews with score >= 70
-    if interview_count > 0:
-        successful_interviews = InterviewSession.objects.filter(total_score__gte=70).count()
-        success_rate = int((successful_interviews / interview_count) * 100)
-    else:
+    try:
+        user_count = User.objects.count()
+        interview_count = InterviewSession.objects.count()
+        
+        # Calculate success rate based on interviews with score >= 70
+        if interview_count > 0:
+            successful_interviews = InterviewSession.objects.filter(total_score__gte=70).count()
+            success_rate = int((successful_interviews / interview_count) * 100)
+        else:
+            success_rate = 0
+    except Exception:
+        user_count = 0
+        interview_count = 0
         success_rate = 0
         
     context = {
