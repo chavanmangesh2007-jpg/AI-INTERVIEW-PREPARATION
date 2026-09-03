@@ -97,6 +97,12 @@ def Signup(request):
 
         # Explicitly set authentication backend to persist login session across protected views
         auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        request.session['user_info'] = {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+        }
         request.session['is_new_user'] = True
         messages.success(request, f"Welcome to AI Interview Assistant, {user.first_name or user.username}!")
         return redirect("dashboard")
@@ -119,7 +125,13 @@ def login(request):
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            auth_login(request, user)
+            auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            request.session['user_info'] = {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+            }
             messages.success(request, f"Welcome back, {user.first_name or user.username}!")
             next_url = request.GET.get('next', 'dashboard')
             return redirect(next_url)
