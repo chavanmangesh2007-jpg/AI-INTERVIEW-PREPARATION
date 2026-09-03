@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Preparation Assistant</title>
+
+    <link rel="stylesheet" href="{% static 'css/Sign up.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+
+    <div class="container">
+
+        <!-- Left Section -->
+        <div class="left">
+            <h5>Welcome to AI Interview</h5>
+
+            <h1>Create Your Account <br>
+                and <span>Get Started</span>
+            </h1>
+
+            <p>
+                Join thousands of students and professionals
+                preparing smarter and achieving their dream career.
+            </p>
+
+            <img class="robot" src="{% static 'media/I2.jpg' %}" alt="AI Assistant">
+
+            <div class="features">
+                <div>
+                    <i class="fa-solid fa-lock"></i>
+                    <h4>Secure & Private</h4>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-bullseye"></i>
+                    <h4>Personalized</h4>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h4>Track Progress</h4>
+                </div>
+            </div>
+
+            <div class="bottom">
+                <div><i class="fa-solid fa-shield"></i> 7-Day Money Back</div>
+                <div><i class="fa-solid fa-credit-card"></i> Secure Payments</div>
+                <div><i class="fa-solid fa-ban"></i> Cancel Anytime</div>
+                <div><i class="fa-solid fa-headset"></i> 24/7 Support</div>
+            </div>
+
+        </div>
+
+        <!-- Right Section -->
+        <div class="right">
+
+           {% if messages %}
+             <div class="messages-container">
+               {% for message in messages %}
+                 <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+                   {{ message }}
+                 </div>
+               {% endfor %}
+             </div>
+           {% endif %}
+
+           <form method="POST" action="{% url 'signup' %}">
+                     {% csrf_token %}
+
+                <label>Full Name</label>
+                <input type="text" name="fullname" placeholder="Enter your full name">
+
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="Enter your Google email address (@gmail.com)" pattern=".*@gmail\.com$" title="Please enter a valid Google email address (@gmail.com)" required>
+
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Create a password">
+
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" placeholder="Confirm your password">
+
+                <button type="submit">Sign Up</button>
+
+                <div class="or">OR</div>
+
+                <button type="button" class="google">
+                    <i class="fa-brands fa-google"></i>
+                    Sign Up with Google
+                </button>
+
+                <button type="button" class="github">
+                    <i class="fa-brands fa-github"></i>
+                    Sign Up with GitHub
+                </button>
+
+                <p class="login">
+                    Already have an account?
+                    <a href="{% url 'login' %}">Login</a>
+                </p>
+
+            </form>
+        </div>
+
+    </div>
+    <!-- <script src="{% static 'js/Sign up.js' %}"></script> -->
+
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Dashboard{% endblock %} - AI Interview Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --primary: #D4AF37; /* Gold */
+            --primary-hover: #F3E5AB; /* Light Gold */
+            --bg-color: #0a0a0a; /* Black */
+            --card-bg: rgba(17, 17, 17, 0.8); /* Dark Gray */
+            --text-main: #ffffff; /* White */
+            --text-muted: #a3a3a3; /* Light Gray */
+            --border: rgba(212, 175, 55, 0.2); /* Subtle Gold Border */
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; }
+        
+        /* Sidebar */
+        .sidebar { width: 260px; background: linear-gradient(180deg, #050505 0%, #1c1808 100%); border-right: 1px solid var(--border); box-shadow: 2px 0 20px rgba(212, 175, 55, 0.05); padding: 2rem 1.5rem; display: flex; flex-direction: column; backdrop-filter: blur(10px); overflow-y: auto; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--primary); }
+        .nav-links { display: flex; flex-direction: column; gap: 0.8rem; }
+        .nav-link { padding: 0.8rem 1rem; border-radius: 12px; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 12px; transition: all 0.3s ease; font-weight: 500; font-size: 0.95rem; }
+        .nav-link:hover, .nav-link.active { background: var(--primary); color: #000; font-weight: 600; transform: translateX(5px); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); }
+        .logout-mt { margin-top: 2rem; }
+
+        /* Main Content */
+        .main-content { flex: 1; padding: 2.5rem; overflow-y: auto; height: 100vh; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
+        .header h1 { font-size: 2rem; font-weight: 600; }
+        
+        /* Tables Section */
+        .section-header { font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .table-container { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; backdrop-filter: blur(12px); width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1.2rem 1.5rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: rgba(212, 175, 55, 0.1); color: var(--primary); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { font-size: 0.95rem; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: rgba(255,255,255,0.02); }
+        
+        /* Buttons */
+        .btn { padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.3s; border: none; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-primary { background: linear-gradient(135deg, #D4AF37, #fde047); color: #000; font-weight: 600; }
+        .btn-primary:hover { background: linear-gradient(135deg, #fde047, #D4AF37); color: #000; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); }
+        .btn-danger { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .btn-danger:hover { background: #ef4444; color: white; }
+        .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>AdminSite</span>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'admin_dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">
+                <i class="fa-solid fa-chart-line"></i> Overview
+            </a>
+            <a href="{% url 'admin_users' %}" class="nav-link {% if 'admin_user' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="fa-solid fa-users"></i> Users
+            </a>
+
+            <a href="{% url 'admin_interviews' %}" class="nav-link {% if 'admin_interview' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="fa-solid fa-video"></i> Interviews
+            </a>
+
+            <a href="{% url 'admin_analytics' %}" class="nav-link {% if 'admin_analytics' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="fa-solid fa-chart-pie"></i> Performance & Analytics
+            </a>
+            <a href="{% url 'admin_feedback' %}" class="nav-link {% if 'admin_feedback' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="fa-solid fa-comment-dots"></i> Feedback
+            </a>
+            <a href="{% url 'admin_settings' %}" class="nav-link {% if 'admin_settings' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="fa-solid fa-gear"></i> Settings
+            </a>
+            
+            <a href="{% url 'dashboard' %}" class="nav-link logout-mt" style="color: #ef4444;">
+                <i class="fa-solid fa-arrow-left"></i> Exit to App
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

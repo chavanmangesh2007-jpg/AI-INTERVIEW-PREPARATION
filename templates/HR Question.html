@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Preparation Assistant</title>
+
+<link rel="stylesheet" href="{% static 'css/HR Question.css' %}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+    
+    
+<!-- Navbar -->
+
+<header>
+    <div class="logo">
+        <a href="{% url 'practice' %}" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+        
+        <h2>HR Questions</h2>
+    </div>
+
+    
+</header>
+
+<!-- Hero -->
+
+<section class="hero">
+
+<div class="left">
+
+<h1>HR Interview Questions</h1>
+
+<p>
+Practice the most common HR interview questions
+and ace your next interview.
+</p>
+
+</div>
+
+<div class="right">
+
+<div class="hero-icon">
+<i class="fa-solid fa-comments"></i>
+</div>
+
+<div class="hero-icon">
+<i class="fa-solid fa-clipboard-check"></i>
+</div>
+
+</div>
+
+</section>
+
+<!-- Stats -->
+
+<section class="stats">
+
+<div class="card">
+<i class="fa-regular fa-circle-question blue"></i>
+<h2>{{ total_questions }}</h2>
+<p>Total Questions</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-table-cells green"></i>
+<h2>{{ categories }}</h2>
+<p>Categories</p>
+</div>
+
+<div class="card">
+<i class="fa-regular fa-bookmark orange"></i>
+<h2>{{ saved_count }}</h2>
+<p>Saved</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-chart-line purple"></i>
+<h2>{{ progress }}%</h2>
+<p>Progress</p>
+</div>
+
+</section>
+
+<!-- Categories -->
+
+<section class="categories">
+
+<div class="heading">
+
+<h2>Browse by Category</h2>
+
+<a href="#">View All Categories</a>
+
+</div>
+
+<div class="category-grid">
+
+<a style="text-decoration: none;" href="{% url 'hr_general' %}">
+    <div class="category">
+<i class="fa-regular fa-user"></i>
+<h3>General</h3>
+<p>50 Questions</p>
+</div>
+</a>
+
+<a style="text-decoration: none;" href="{% url 'hr_experience' %}">
+    <div class="category">
+      <i class="fa-solid fa-briefcase"></i>
+      <h3>Experience</h3>
+      <p>60 Questions</p>
+    </div>
+</a>
+
+<a style="text-decoration: none;" href="{% url 'hr_behavioral' %}">    
+   <div class="category">
+   <i class="fa-solid fa-bullseye"></i>
+   <h3>Behavioral</h3>
+   <p>40 Questions</p>
+   </div>
+</a>
+<a style="text-decoration: none;" href="{% url 'hr_company_fit' %}">
+<div class="category">
+<i class="fa-solid fa-building"></i>
+<h3>Company Fit</h3>
+<p>30 Questions</p>
+</div>
+</a>
+<a style="text-decoration: none;" href="{% url 'hr_career_goals' %}">
+    
+<div class="category">
+<i class="fa-solid fa-star"></i>
+<h3>Career Goals</h3>
+<p>30 Questions</p>
+</div>
+
+</a>
+</div>
+
+</section>
+
+<!-- Recent Questions -->
+
+<section class="recent">
+<h2>Recent Questions</h2>
+
+{% for question in recent_questions %}
+<div class="question">
+<div>
+<h3>{{ forloop.counter }}. {{ question.question_text|truncatechars:100 }}</h3>
+<span>{{ question.session.topic }}</span>
+<span>{{ question.session.difficulty }}</span>
+</div>
+<a href="{% url 'session_detail' question.session.id %}" style="color: inherit;">
+<i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+{% empty %}
+<div style="text-align: center; padding: 20px; color: #888;">
+  <p>No recent questions found. Take an HR mock interview to see them here!</p>
+</div>
+{% endfor %}
+
+</section>
+</body>
+</html>

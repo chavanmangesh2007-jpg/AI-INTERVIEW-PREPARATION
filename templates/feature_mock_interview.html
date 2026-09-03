@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mock Interviews - Feature Details</title>
+    
+    <!-- Shared Feature Detail CSS -->
+    <link rel="stylesheet" href="{% static 'css/features_detail.css' %}">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="theme-mock-interview">
+
+    <!-- ================= NAVBAR ================= -->
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-robot"></i>
+            <div>
+                <h2>AI Interview</h2>
+                <p>Preparation Assistant</p>
+            </div>
+        </div>
+        <a href="{% url 'home' %}" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+    </nav>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge">Feature Spotlight</span>
+            <h1>Interactive <span>AI Mock Interviews</span></h1>
+            <p>Experience the most realistic technical and behavioral interviews powered by advanced AI. Get real-time adaptive questioning and instant feedback on your performance.</p>
+            
+            <a href="{% url 'mock_interview' %}" class="cta-btn">
+                Try Mock Interview <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="hero-image">
+            <div class="glass-card">
+                <i class="fa-solid fa-user-tie"></i>
+                <h2>Real-time Voice Chat</h2>
+                <p style="margin-top: 15px; color: var(--text-light); font-size: 0.95rem;">Talk directly to our AI interviewer, just like a real Zoom interview.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= HIGHLIGHTS ================= -->
+    <section class="highlights">
+        <h2 class="highlights-title">Why use AI Mock Interviews?</h2>
+        
+        <div class="highlights-grid">
+            <div class="highlight-card">
+                <i class="fa-solid fa-microphone-lines"></i>
+                <h3>Voice Recognition</h3>
+                <p>Answer questions verbally. Our system accurately captures and analyzes your speech for tone, clarity, and keywords.</p>
+            </div>
+            
+            <div class="highlight-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Adaptive Difficulty</h3>
+                <p>The AI adjusts the difficulty of follow-up questions based on your previous answers to test your true depth of knowledge.</p>
+            </div>
+            
+            <div class="highlight-card">
+                <i class="fa-solid fa-clipboard-check"></i>
+                <h3>Instant Evaluation</h3>
+                <p>As soon as you finish, receive a comprehensive breakdown of your strengths, weaknesses, and a suggested ideal answer.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

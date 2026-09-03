@@ -1,0 +1,173 @@
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#0a0a0a;
+    color:#fff;
+}.heading{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.back-btn{
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #111;
+    color: #D4AF37;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 24px;
+    transition: 0.3s;
+    border: 1px solid #333;
+}
+
+.back-btn:hover{
+    background: #D4AF37;
+    color: #000;
+    transform: scale(1.1);
+}
+
+.heading h1{
+    margin: 0;
+    font-size: 38px;
+}
+.container{
+    width:90%;
+    max-width:1800px;
+    margin:30px auto;
+}
+
+.breadcrumb{
+    color:#a3a3a3;
+    margin-bottom:15px;
+}
+
+.breadcrumb span{
+    color:#D4AF37;
+    font-weight:bold;
+}
+
+h1{
+    font-size:38px;
+    margin-bottom:10px;
+    color:#fff;
+}
+
+.subtitle{
+    color:#a3a3a3;
+    margin-bottom:30px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:20px;
+    height: 90px;
+    margin-bottom:35px;
+}
+
+.card{
+    background:#111;
+    border-radius:15px;
+    padding:20px;
+    display:flex;
+    align-items:center;
+    align-items:center;
+    gap:15px;
+    font-weight:bold;
+}
+
+.level{
+    display:flex;
+    gap:15px;
+    align-items:center;
+    font-size:14px;
+}
+
+.level span{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    display:inline-block;
+    margin-right:5px;
+}
+
+.easy{background:#2ecc71;}
+.medium{background:#f39c12;}
+.hard{background:#e74c3c;}
+
+.banner{
+    margin-top:35px;
+    background:#111;
+    padding:30px;
+    border-radius:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 5px 15px rgba(212,175,55,.05);
+    border: 1px solid #333;
+}
+
+.banner button{
+    background:linear-gradient(90deg,#F3E5AB,#D4AF37);
+    color:#000;
+    border:none;
+    padding:15px 30px;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    font-weight:bold;
+    transition: .3s;
+}
+
+.banner button:hover{
+    transform: scale(1.05);
+}
+
+@media(max-width:900px){
+
+.row{
+grid-template-columns:1fr;
+gap:10px;
+}
+
+.banner{
+flex-direction:column;
+text-align:center;
+gap:20px;
+}
+
+}
+  
+.signup, .neon-button {
+    --clr-neon: #D4AF37;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--clr-neon);
+    background: transparent;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    border: 0.125em solid var(--clr-neon);
+    padding: 0.5em 1.5em;
+    border-radius: 0.25em;
+    text-shadow: 0 0 0.125em hsl(0, 0%, 100%, 0.3), 0 0 0.45em currentColor;
+    box-shadow: inset 0 0 0.5em 0 var(--clr-neon), 0 0 0.5em 0 var(--clr-neon);
+    position: relative;
+    transition: 0.3s;
+}
+
+.signup:hover, .neon-button:hover {
+    background: var(--clr-neon);
+    color: #000;
+    text-shadow: none;
+}

@@ -1,0 +1,101 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}User Management{% endblock %}
+
+{% block extra_css %}
+<style>
+    .badge { padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+    .badge-admin { background: rgba(79, 70, 229, 0.2); color: #818cf8; }
+    .badge-user { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-inactive { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    
+    .actions { display: flex; gap: 8px; }
+    .btn-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; border: none; cursor: pointer; transition: 0.2s; }
+    .btn-edit { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+    .btn-edit:hover { background: #3b82f6; color: #fff; }
+    .btn-toggle { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .btn-toggle:hover { background: #f59e0b; color: #fff; }
+    .btn-del { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .btn-del:hover { background: #ef4444; color: #fff; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>User Management</h1>
+        <p style="color: var(--text-muted); margin-top: 5px;">View, add, edit, and manage platform users.</p>
+    </div>
+    <a href="{% url 'admin_user_create' %}" class="btn btn-primary">
+        <i class="fa-solid fa-plus"></i> Add New User
+    </a>
+</div>
+
+{% if messages %}
+<div style="margin-bottom: 2rem;">
+    {% for message in messages %}
+    <div style="padding: 1rem; border-radius: 8px; font-weight: 500; margin-bottom: 0.5rem; {% if message.tags == 'success' %}background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);{% else %}background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>User Details</th>
+                <th>Role</th>
+                <th>Target Job</th>
+                <th>Status</th>
+                <th>Joined</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for profile in profiles %}
+            <tr>
+                <td>
+                    <div style="font-weight: 600; color: #fff;">{{ profile.full_name|default:profile.user.username }}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">{{ profile.user.email }}</div>
+                </td>
+                <td>
+                    <span class="badge {% if profile.role == 'Admin' %}badge-admin{% else %}badge-user{% endif %}">
+                        {{ profile.role }}
+                    </span>
+                </td>
+                <td>{{ profile.target_role }}</td>
+                <td>
+                    {% if profile.user.is_active %}
+                        <span class="badge badge-user">Active</span>
+                    {% else %}
+                        <span class="badge badge-inactive">Inactive</span>
+                    {% endif %}
+                </td>
+                <td>{{ profile.created_at|date:"M d, Y" }}</td>
+                <td>
+                    <div class="actions">
+                        <a href="{% url 'admin_user_edit' profile.user.id %}" class="btn-icon btn-edit" title="Edit User"><i class="fa-solid fa-pen"></i></a>
+                        <form method="POST" action="{% url 'admin_user_toggle' profile.user.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon btn-toggle" title="{% if profile.user.is_active %}Deactivate{% else %}Activate{% endif %}">
+                                <i class="fa-solid {% if profile.user.is_active %}fa-ban{% else %}fa-check{% endif %}"></i>
+                            </button>
+                        </form>
+                        <form method="POST" action="{% url 'admin_user_delete' profile.user.id %}" style="display:inline;" onsubmit="return confirm('Are you sure you want to completely delete this user?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon btn-del" title="Delete User"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 3rem; color: var(--text-muted);">No users found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

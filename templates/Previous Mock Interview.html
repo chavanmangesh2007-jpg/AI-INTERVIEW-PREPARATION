@@ -1,0 +1,269 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Preparation Assistant</title>
+    <link rel="stylesheet" href="{% static 'css/Previous Mock Interview.css' %}?v=5">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+    <!-- ================= NAVBAR ================= -->
+
+    <nav>
+
+        <div class="logo1">
+
+            <i class="fa-solid fa-robot"></i>
+
+            <div>
+
+                <h2>AI Interview</h2>
+
+                <p>Preparation Assistant</p>
+
+            </div>
+
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}"><i class="fa-solid fa-house nav-icon-home"></i> Home</a></li>
+            <li><a class="active" href="{% url 'mock_interview' %}"><i class="fa-solid fa-user-check nav-icon-mock"></i> Mock
+                    Interview</a></li>
+            <li><a href="{% url 'practice' %}"><i class="fa-solid fa-graduation-cap nav-icon-practice"></i> Practice</a>
+            </li>
+            <li><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line nav-icon-dashboard"></i> Dashboard</a>
+            </li>
+            <li><a href="{% url 'Contact' %}"><i class="fa-solid fa-envelope nav-icon-contact"></i> Contact</a></li>
+        </ul>
+
+        <div class="buttons">
+            <a href="{% url 'profile' %}"><button class="signup"><i class="fa-solid fa-user"></i> Profile</button></a>
+        </div>
+
+    </nav>
+
+
+    <div class="container1">
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-microphone"></i>
+                <div>
+                    <h2>Mock Interview</h2>
+                    <p>Practice with AI Interviewers</p>
+                </div>
+            </div>
+
+            <ul>
+                <li>
+                    <a href="{% url 'mock_interview' %}">
+                        <i class="fa-solid fa-play"></i> Start New Interview
+                    </a>
+                </li>
+                <li class="active1">
+                    <a href="{% url 'previous_interviews' %}">
+                        <i class="fa-regular fa-clock"></i> Previous Interviews
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'saved_questions' %}">
+                        <i class="fa-regular fa-bookmark"></i> Saved Questions
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'Interview_settings' %}">
+                        <i class="fa-solid fa-gear"></i>
+                        Interview Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'Help' %}">
+                        <i class="fa-solid fa-question-circle"></i>
+                        Help
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tip-box">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Pro Tip</h3>
+                <p>Structure your answer using Situation, Task, Action, and Result (STAR) for best scores.</p>
+            </div>
+        </aside>
+
+
+
+
+
+
+
+
+
+        <div class="container">
+
+            <div class="top">
+                <div>
+                    <h1>Previous Interviews</h1>
+                    <p>Review and analyze your past mock interviews</p>
+                </div>
+
+                <div class="search-box">
+                    <i class="fa fa-search"></i>
+                    <input type="text" placeholder="Search interviews...">
+                </div>
+            </div>
+
+            <!-- Cards -->
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="icon purple">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+
+                    <div>
+                        <h5>Total Interviews</h5>
+                        <h2>{{ total_interviews }}</h2>
+                        <p>All Time</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icon green">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+
+                    <div>
+                        <h5>Average Score</h5>
+                        <h2>{{ avg_score }}%</h2>
+                        <p>Across all interviews</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icon orange">
+                        <i class="fa-regular fa-calendar"></i>
+                    </div>
+
+                    <div>
+                        <h5>This Month</h5>
+                        <h2>{{ this_month_count }}</h2>
+                        <p>Interviews Taken</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icon blue">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+
+                    <div>
+                        <h5>Best Score</h5>
+                        <h2>{{ best_score }}%</h2>
+                        <p>{{ best_topic }}</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Table -->
+
+            <div class="table-box">
+
+                <div class="table-header">
+                    <h2>All Interviews</h2>
+
+                    <select>
+                        <option>Newest First</option>
+                        <option>Oldest First</option>
+                    </select>
+                </div>
+
+                <!-- Row -->
+                {% for session in sessions %}
+                <div class="row">
+
+                    <div class="job">
+                        <div class="job-icon">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+
+                        <div>
+                            <h3>{{ session.topic }}</h3>
+                            <p>{{ session.difficulty }} Interview</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p><i class="fa-regular fa-calendar"></i> {{ session.created_at|date:"M d, Y" }}</p>
+                        <p><i class="fa-regular fa-clock"></i> {{ session.created_at|date:"h:i A" }}</p>
+                    </div>
+
+                    <div
+                        class="score {% if session.status == 'ongoing' %}orange-text{% elif session.total_score >= 80 %}green-text{% elif session.total_score >= 50 %}orange-text{% else %}red-text{% endif %}">
+                        {% if session.status == 'ongoing' %}
+                        <span style="font-size: 16px;">--</span>
+                        {% else %}
+                        <span>{{ session.total_score }}%</span>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <h4
+                            class="{% if session.status == 'ongoing' %}orange-text{% elif session.total_score >= 80 %}green-text{% elif session.total_score >= 50 %}orange-text{% else %}red-text{% endif %}">
+                            {% if session.status == 'ongoing' %}In Progress
+                            {% elif session.total_score >= 80 %}Excellent
+                            {% elif session.total_score >= 50 %}Average
+                            {% else %}Needs Improvement{% endif %}
+                        </h4>
+                        <p>{{ session.get_status_display }}</p>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <a href="{% url 'session_detail' session.id %}">
+                            <button style="cursor: pointer;">View Details</button>
+                        </a>
+                        {% if user.is_staff or user.is_superuser %}
+                        <form method="POST" action="{% url 'admin_interview_delete' session.id %}" onsubmit="return confirm('Are you sure you want to delete this interview?');" style="margin:0;">
+                            {% csrf_token %}
+                            <button type="submit" style="cursor: pointer; background: rgba(220, 38, 38, 0.2); color: #ef4444; border: 1px solid rgba(220, 38, 38, 0.3); border-radius: 8px; padding: 10px 15px;" title="Delete Interview">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                </div>
+                {% empty %}
+                <div style="text-align: center; padding: 40px; color: #888;">
+                    <h3>No past interviews found.</h3>
+                    <p>Complete a mock interview to see your results here.</p>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+    <script src="{% static 'js/Previous Mock Interview.js' %}"></script>
+</body>
+
+</html>

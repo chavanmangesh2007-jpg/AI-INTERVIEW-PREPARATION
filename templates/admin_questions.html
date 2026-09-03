@@ -1,0 +1,89 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Question Bank Management{% endblock %}
+
+{% block extra_css %}
+<style>
+    .badge { padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+    .badge-easy { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-med { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .badge-hard { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    
+    .actions { display: flex; gap: 8px; }
+    .btn-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; border: none; cursor: pointer; transition: 0.2s; }
+    .btn-edit { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+    .btn-edit:hover { background: #3b82f6; color: #fff; }
+    .btn-del { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .btn-del:hover { background: #ef4444; color: #fff; }
+    
+    .truncate-text { max-width: 350px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>Question Bank Management</h1>
+        <p style="color: var(--text-muted); margin-top: 5px;">Manage platform interview questions by category and difficulty.</p>
+    </div>
+    <a href="{% url 'admin_question_add' %}" class="btn btn-primary">
+        <i class="fa-solid fa-plus"></i> Add New Question
+    </a>
+</div>
+
+{% if messages %}
+<div style="margin-bottom: 2rem;">
+    {% for message in messages %}
+    <div style="padding: 1rem; border-radius: 8px; font-weight: 500; margin-bottom: 0.5rem; {% if message.tags == 'success' %}background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);{% else %}background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Category</th>
+                <th>Difficulty</th>
+                <th>Added On</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in questions %}
+            <tr>
+                <td>
+                    <span class="truncate-text" title="{{ q.question_text }}">{{ q.question_text }}</span>
+                </td>
+                <td>
+                    <div style="font-weight: 600;">{{ q.category }}</div>
+                    {% if q.sub_category %}<div style="font-size: 0.8rem; color: var(--text-muted);">{{ q.sub_category }}</div>{% endif %}
+                </td>
+                <td>
+                    <span class="badge {% if q.difficulty == 'Easy' %}badge-easy{% elif q.difficulty == 'Medium' %}badge-med{% else %}badge-hard{% endif %}">
+                        {{ q.difficulty }}
+                    </span>
+                </td>
+                <td>{{ q.created_at|date:"M d, Y" }}</td>
+                <td>
+                    <div class="actions">
+                        <a href="{% url 'admin_question_edit' q.id %}" class="btn-icon btn-edit" title="Edit Question"><i class="fa-solid fa-pen"></i></a>
+                        <form method="POST" action="{% url 'admin_question_delete' q.id %}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this question?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon btn-del" title="Delete Question"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-muted);">No questions found in the Question Bank.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

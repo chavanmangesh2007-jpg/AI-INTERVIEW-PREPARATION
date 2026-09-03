@@ -1,0 +1,100 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Dashboard Overview{% endblock %}
+
+{% block extra_css %}
+<style>
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; display: flex; align-items: center; gap: 20px; transition: transform 0.3s ease; backdrop-filter: blur(12px); }
+    .stat-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+    .stat-icon { width: 55px; height: 55px; border-radius: 12px; background: rgba(79, 70, 229, 0.2); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+    .stat-info h3 { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
+    .stat-info p { color: var(--text-muted); font-size: 0.85rem; font-weight: 500; }
+    
+    .badge { padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+    .badge-admin { background: rgba(79, 70, 229, 0.2); color: #818cf8; }
+    .badge-user { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>Dashboard Overview</h1>
+        <p style="color: var(--text-muted); margin-top: 5px;">Platform statistics and recent activity.</p>
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+        <div class="stat-info">
+            <h3>{{ total_users }}</h3>
+            <p>Total Users</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.2); color: #10b981;"><i class="fa-solid fa-user-check"></i></div>
+        <div class="stat-info">
+            <h3>{{ active_users }}</h3>
+            <p>Active Users (30d)</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-comments"></i></div>
+        <div class="stat-info">
+            <h3>{{ total_interviews }}</h3>
+            <p>Interviews</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;"><i class="fa-solid fa-robot"></i></div>
+        <div class="stat-info">
+            <h3>{{ ai_questions }}</h3>
+            <p>AI Questions</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-star"></i></div>
+        <div class="stat-info">
+            <h3>{{ avg_score }}</h3>
+            <p>Avg Score</p>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-header">Recent Registrations</h2>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Target Job</th>
+                <th>Joined Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for profile in recent_users %}
+            <tr>
+                <td>
+                    <div style="font-weight: 600; color: #fff;">{{ profile.full_name|default:profile.user.username }}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">{{ profile.user.email }}</div>
+                </td>
+                <td>
+                    <span class="badge {% if profile.role == 'Admin' %}badge-admin{% else %}badge-user{% endif %}">
+                        {{ profile.role }}
+                    </span>
+                </td>
+                <td>{{ profile.target_role }}</td>
+                <td>{{ profile.created_at|date:"M d, Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center; color: var(--text-muted);">No users found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

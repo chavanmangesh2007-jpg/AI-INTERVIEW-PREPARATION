@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Preparation Assistant</title>
+
+<link rel="stylesheet" href="{% static 'css/Data Structure.css' %}"> 
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+    
+<div class="container">
+
+    <!-- Header -->
+    <div class="header"><a href="Mock Interview.html">
+     <i class="fa-solid fa-arrow-left"></i>
+    </a>
+        
+        <h2>Mock Interview</h2>
+    </div>
+     <br><br>
+     <br>
+    <div class="main">
+
+        <!-- Left Section -->
+        <div class="left">
+
+            <!-- Question Card -->
+            <div class="card">
+                <div class="top">
+                    <h3>Question</h3>
+                    <span>3 / 10</span>
+                </div>
+
+                <h2>Explain the difference between Array and Linked List.</h2>
+
+                <div class="tags">
+                    <span class="tag blue">Data Structure</span>
+                    <span class="tag orange">Medium</span>
+                </div>
+            </div>
+
+            <!-- Answer Card -->
+            <div class="card answer">
+
+                <div class="answer-head">
+                    <h3>Your Answer</h3>
+                    <span class="timer">02:45</span>
+                </div>
+
+                <div class="wave">
+                    █▇▆▅▄▃▂▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█
+                </div>
+
+                <p class="listen">Listening...</p>
+
+                <button class="mic">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+
+                <p>Click mic to stop</p>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="buttons">
+                <button class="end">End Interview</button>
+                <button class="next">Next Question</button>
+            </div>
+
+        </div>
+
+        <!-- Right Section -->
+        <div class="right">
+
+            <!-- Progress -->
+            <div class="side-card">
+
+                <h3>Interview Progress</h3>
+
+                <div class="circle">
+                    <div class="inner">
+                        <h2>30%</h2>
+                        <p>Completed</p>
+                    </div>
+                </div>
+
+                <h4>Time Left</h4>
+                <h2>12:30</h2>
+
+            </div>
+
+            <!-- AI -->
+            <div class="side-card">
+                <h3>AI Interviewer</h3>
+
+                <div class="robot">
+                    🤖
+                </div>
+
+                <p>I'm listening to your answer...</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="../js1/Data Structure.js"></script>
+    
+</body>
+</html>

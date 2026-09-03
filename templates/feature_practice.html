@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Questions - Feature Details</title>
+    
+    <!-- Shared Feature Detail CSS -->
+    <link rel="stylesheet" href="{% static 'css/features_detail.css' %}">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="theme-practice">
+
+    <!-- ================= NAVBAR ================= -->
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-robot"></i>
+            <div>
+                <h2>AI Interview</h2>
+                <p>Preparation Assistant</p>
+            </div>
+        </div>
+        <a href="{% url 'home' %}" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+    </nav>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge">Feature Spotlight</span>
+            <h1>Extensive <span>Practice Library</span></h1>
+            <p>Don't want to do a full mock interview? Browse our massive library of questions spanning Technical, HR, Behavioral, System Design, and even Company-Specific categories.</p>
+            
+            <a href="{% url 'practice' %}" class="cta-btn">
+                Start Practicing <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="hero-image">
+            <div class="glass-card">
+                <i class="fa-solid fa-book-open"></i>
+                <h2>1000+ Questions</h2>
+                <p style="margin-top: 15px; color: var(--text-light); font-size: 0.95rem;">Curated questions from top tech companies to keep you sharp.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= HIGHLIGHTS ================= -->
+    <section class="highlights">
+        <h2 class="highlights-title">Master Every Topic</h2>
+        
+        <div class="highlights-grid">
+            <div class="highlight-card">
+                <i class="fa-solid fa-building"></i>
+                <h3>Company Specific</h3>
+                <p>Targeting FAANG? We have dedicated question banks for Google, Amazon, Meta, and top IT firms like TCS and Infosys.</p>
+            </div>
+            
+            <div class="highlight-card">
+                <i class="fa-solid fa-code"></i>
+                <h3>Deep Technical Dives</h3>
+                <p>Master Data Structures, Algorithms, Databases, and System Design with questions categorized by difficulty level.</p>
+            </div>
+            
+            <div class="highlight-card">
+                <i class="fa-solid fa-bookmark"></i>
+                <h3>Save for Later</h3>
+                <p>Stuck on a hard question? Bookmark it instantly and revisit your saved collection anytime to reinforce your learning.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

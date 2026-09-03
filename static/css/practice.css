@@ -1,0 +1,470 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0a0a0a;
+    color:#ffffff;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+a{
+    text-decoration:none;
+}
+
+ul{
+    list-style:none;
+}
+
+/* =====================
+        NAVBAR
+===================== */
+
+nav{
+    width:100%;
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #D4AF37;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    color:#fff;
+    height: 100px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 7%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo1{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo1 i{
+    font-size:55px;
+    color:#D4AF37;
+}
+
+.pl{
+    display:flex;
+    gap:15px;
+}
+.logo1 h2{
+    font-size:34px;
+    line-height:1;
+}
+
+.logo1 p{
+    color:#F3E5AB;
+}
+
+nav ul{
+    display:flex;
+    gap:35px;
+}
+
+nav ul li a{
+    color:#fff;
+    font-weight:500;
+    transition:.3s;
+}
+
+nav ul li a:hover,
+.active{
+    color:#D4AF37;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+}
+
+nav ul li a i.nav-icon-home { color: #3b82f6; text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+nav ul li a i.nav-icon-mock { color: #a855f7; text-shadow: 0 0 10px rgba(168, 85, 247, 0.5); }
+nav ul li a i.nav-icon-resume { color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+nav ul li a i.nav-icon-practice { color: #f59e0b; text-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+nav ul li a i.nav-icon-dashboard { color: #ec4899; text-shadow: 0 0 10px rgba(236, 72, 153, 0.5); }
+nav ul li a i.nav-icon-contact { color: #06b6d4; text-shadow: 0 0 10px rgba(6, 182, 212, 0.5); }
+
+.buttons{
+    display:flex;
+    gap:15px;
+}
+
+.login{
+    padding:12px 25px;
+    border:2px solid #D4AF37;
+    background:transparent;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.signup, .neon-button {
+    --clr-neon: #D4AF37;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--clr-neon);
+    background: transparent;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    border: 0.125em solid var(--clr-neon);
+    padding: 0.5em 1.5em;
+    border-radius: 0.25em;
+    text-shadow: 0 0 0.125em hsl(0, 0%, 100%, 0.3), 0 0 0.45em currentColor;
+    box-shadow: inset 0 0 0.5em 0 var(--clr-neon), 0 0 0.5em 0 var(--clr-neon);
+    position: relative;
+    transition: 0.3s;
+}
+
+.signup:hover, .neon-button:hover, .neon-button:focus {
+    background: var(--clr-neon);
+    color: #000;
+    text-shadow: none;
+}
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ================= Main ================= */
+
+.main-content{
+    flex:1;
+    padding:35px;
+}
+
+.header h1{
+    font-size:34px;
+}
+
+.header p{
+    margin-top:8px;
+    color:#a3a3a3;
+}
+
+/* ================= Statistics ================= */
+
+.stats{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.card{
+    background:#111;
+    border-radius:18px;
+    padding:25px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    box-shadow:0 5px 20px rgba(212,175,55,.05);
+    border: 0.125em solid transparent;
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+}
+
+.card i{
+    width:60px;
+    height:60px;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+    color:#ec4899;
+    background:rgba(236, 72, 153, 0.1);
+    box-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
+}
+
+.card h2{
+    font-size:28px;
+}
+
+.card p{
+    color:#a3a3a3;
+    margin-top:5px;
+}
+
+/* ================= Practice Section ================= */
+
+.practice-section{
+    margin-top:45px;
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.section-title select{
+    padding:10px 15px;
+    border:1px solid #333;
+    border-radius:10px;
+    background:#222;
+    color:#fff;
+    outline:none;
+}
+
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.category-card{
+    background:#111;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 5px 18px rgba(212,175,55,.05);
+    transition:.3s;
+    border: 0.125em solid transparent;
+}
+
+.category-card:hover{
+    transform:translateY(-6px);
+}
+
+.icon{
+    width:60px;
+    height:60px;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:20px;
+    font-size:24px;
+}
+
+.purple{
+    background:rgba(168, 85, 247, 0.1);
+    color:#a855f7;
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+}
+.blue{
+    background:rgba(59, 130, 246, 0.1);
+    color:#3b82f6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+.green{
+    background:rgba(16, 185, 129, 0.1);
+    color:#10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+.orange{
+    background:rgba(245, 158, 11, 0.1);
+    color:#f59e0b;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+.pink{
+    background:rgba(236, 72, 153, 0.1);
+    color:#ec4899;
+    box-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
+}
+
+.category-card h3{
+    margin-bottom:12px;
+}
+
+.category-card p{
+    color:#a3a3a3;
+    line-height:1.7;
+    font-size:14px;
+}
+
+.card-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+}
+
+.card-footer span{
+    background:rgba(16, 185, 129, 0.1);
+    color:#10b981;
+    padding:7px 14px;
+    border-radius:25px;
+    font-size:13px;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+}
+
+/* ================= Table ================= */
+
+.practice-table{
+    margin-top:45px;
+    background:#111;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(212,175,55,.05);
+    border: 0.125em solid transparent;
+    transition: .3s;
+}
+
+.practice-table:hover {
+    transform: translateY(-6px);
+}
+
+.table-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+.table-header a{
+    text-decoration:none;
+    color:#D4AF37;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:18px;
+    text-align:left;
+    border-bottom:1px solid #333;
+}
+
+th{
+    background:#1a1a1a;
+}
+
+button{
+    background:#D4AF37;
+    color:#000;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#F3E5AB;
+}
+
+/* =======================
+   Responsive Design
+======================= */
+
+/* Laptop */
+@media (max-width:1200px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+    .category-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+/* Tablet */
+@media (max-width:992px){
+    .container{
+        flex-direction:column;
+    }
+    .sidebar{
+        width:100%;
+        border-right:none;
+        border-bottom:1px solid #333;
+    }
+    .tip-card{
+        display:none;
+    }
+    .main-content{
+        padding:20px;
+    }
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+    .category-grid{
+        grid-template-columns:1fr 1fr;
+    }
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+}
+
+/* Mobile */
+@media (max-width:768px){
+    .header h1{
+        font-size:28px;
+    }
+    .stats{
+        grid-template-columns:1fr;
+    }
+    .category-grid{
+        grid-template-columns:1fr;
+    }
+    .section-title{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+    .card{
+        flex-direction:column;
+        text-align:center;
+    }
+    .logo{
+        justify-content:center;
+    }
+    .menu li{
+        padding:12px;
+        font-size:15px;
+    }
+    .practice-table{
+        overflow-x:auto;
+    }
+}
+
+/* Small Mobile */
+@media (max-width:480px){
+    .sidebar{
+        padding:18px;
+    }
+    .main-content{
+        padding:15px;
+    }
+    .card,
+    .category-card,
+    .practice-table{
+        padding:18px;
+    }
+    .card h2{
+        font-size:22px;
+    }
+    .header h1{
+        font-size:24px;
+    }
+    .header p{
+        font-size:14px;
+    }
+    .card-footer{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+    button{
+        width:100%;
+    }
+}

@@ -1,0 +1,298 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Preparation Assistant</title>
+    <link rel="stylesheet" href="{% static 'css/Company Specific.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!--================== NAVBAR ==================-->
+
+    <header class="navbar">
+
+        <div class="left-nav">
+
+            <a href="{% url 'practice' %}" class="back-btn"><i class="fa-solid fa-arrow-left" id="backBtn"></i></a>
+
+            <h2>Mock Interview</h2>
+
+        </div>
+
+        <div class="right-nav">
+
+            <div class="timer">
+
+                <i class="fa-regular fa-clock"></i>
+
+                <div>
+
+                    <small>Time Remaining</small>
+
+                    <h3 id="time">90:00</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!--================ MAIN =================-->
+
+    <div class="container">
+
+        <h1>Company Specific Question</h1>
+
+        <div class="tags">
+
+            <span class="green">
+                <i class="fa-solid fa-circle"></i>
+                Level : Easy
+            </span>
+
+            <span class="purple">
+                <i class="fa-solid fa-circle"></i>
+                Type : Behavioral
+            </span>
+
+            <span class="blue" id="totalQuestionsTag">
+                <i class="fa-solid fa-circle"></i>
+                Questions : <span id="totalQuestionsCount">200</span>
+            </span>
+
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 10px;">
+                <label for="companySelect" style="font-weight: 500; font-size: 14px; color: #333;">Target
+                    Company:</label>
+                <select id="companySelect"
+                    style="padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc; font-family: 'Poppins', sans-serif; outline: none; cursor: pointer; background: white; color: #333;">
+                    <option value="General">General / Mixed</option>
+                    <option value="Google">Google</option>
+                    <option value="Amazon">Amazon</option>
+                    <option value="Microsoft">Microsoft</option>
+                    <option value="Apple">Apple</option>
+                    <option value="Meta">Meta</option>
+                    <option value="TCS">TCS</option>
+                    <option value="Infosys">Infosys</option>
+                    <option value="Wipro">Wipro</option>
+                    <option value="Accenture">Accenture</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="main-grid">
+
+            <!--================ LEFT =================-->
+
+            <div class="left-panel">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h3>Your Camera</h3>
+
+                        <span class="live">
+                            <i class="fa-solid fa-circle"></i>
+                            Live
+                        </span>
+
+                    </div>
+                    <div class="camera">
+                        <video id="camera" autoplay playsinline muted></video>
+                    </div>
+
+                    <div class="camera-footer">
+
+
+                    </div>
+                    <div class="camera-controls">
+                        <button id="cameraBtn">
+                            <i class="fa-solid fa-video"></i> Camera OFF
+                        </button>
+
+                        <button id="micBtn">
+                            <i class="fa-solid fa-microphone"></i> Mic OFF
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="card mic">
+
+                    <h3>Microphone Status</h3>
+
+                    <div class="mic-box">
+
+                        <i class="fa-solid fa-microphone" id="micIcon"></i>
+
+                        <span id="micStatus">Microphone is ON</span>
+
+                        <div class="wave" id="wave">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--================ RIGHT =================-->
+
+            <div class="right-panel">
+
+                <div class="card interviewer">
+
+                    <div class="robot">
+
+                        <img src="AI1.jpg">
+
+                    </div>
+
+                    <div>
+
+                        <h3>AI Interviewer</h3>
+
+                        <p>Hello! I am your AI interviewer.</p>
+
+                        <p>Let's begin your interview.</p>
+
+                    </div>
+
+                </div>
+
+                <div class="card question">
+
+                    <h3>Current Question</h3>
+
+                    <div class="question-box">
+
+                        <h2>
+
+                            <span>1.</span>
+                            Tell me about yourself.
+                        </h2>
+
+                        <p>
+
+                            This will help us understand your background and experience.
+
+                        </p>
+                        <div style="position: absolute; right: 25px; top: 35px; display: flex; gap: 20px;">
+                            <i class="fa-solid fa-volume-high" id="speakQuestion"
+                                style="position: static; font-size: 28px; color: #d4af37; cursor: pointer;"
+                                title="Read Question"></i>
+                            <i class="fa-regular fa-bookmark" id="saveQuestion"
+                                style="position: static; font-size: 28px; color: #d4af37; cursor: pointer;"
+                                title="Save Question"></i>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card transcript">
+
+                    <div class="trans-header">
+
+                        <h3>Your Answer (Live Transcript)</h3>
+
+                        <span class="listen">
+
+                            <i class="fa-solid fa-circle"></i>
+
+                            Listening...
+
+                        </span>
+
+                    </div>
+
+                    <textarea id="answer" placeholder="Your speech will appear here in real-time..."></textarea>
+
+                    <div class="word">
+
+                        Words : 0
+
+                    </div>
+
+                </div>
+
+                <div class="buttons">
+
+                    <button class="listen-btn">
+
+                        <i class="fa-solid fa-microphone"></i>
+
+                        Listening...
+
+                    </button>
+
+                    <button class="next">
+
+                        Next Question
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                    <button class="end">
+
+                        <i class="fa-solid fa-stop"></i>
+
+                        End Interview
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="tips">
+
+            <i class="fa-regular fa-lightbulb"></i>
+
+            <strong>Tips for Best Interview</strong>
+
+            <ul>
+
+                <li>Speak clearly and confidently</li>
+
+                <li>Maintain eye contact</li>
+
+                <li>Take your time to think</li>
+
+            </ul>
+
+            <i class="fa-solid fa-xmark close"></i>
+
+        </div>
+
+    </div>
+    <script src="{% static 'js/Company Specific.js' %}"></script>
+</body>
+
+</html>

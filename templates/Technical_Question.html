@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Preparation Assistant</title>
+
+    <link rel="stylesheet" href="{% static 'css/Technical Question.css' %}?v=2">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="heading">
+            <a href="{% url 'practice' %}" class="back-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+
+            <h1>Technical Questions</h1>
+        </div>
+
+        <p class="subtitle">
+            Practice coding, data structures, algorithms and core technical concepts.
+        </p>
+
+        <!-- Stats -->
+        <div class="stats">
+
+            <div class="card">
+                <div class="icon purple">
+                    <i class="fa-solid fa-circle-question"></i>
+                </div>
+                <div>
+                    <h2>650</h2>
+                    <p>Total Questions</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icon green">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <div>
+                    <h2>7</h2>
+                    <p>Topics</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icon blue">
+                    <i class="fa-solid fa-chart-column"></i>
+                </div>
+                <div>
+                    <h2>3<h2>
+                            <p>Difficulty Levels</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icon orange">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div>
+                    <h2>Bookmark</h2>
+                    <p>Important Qs</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Topics -->
+        <h2 class="topic-title">Topics</h2>
+
+        <div class="table">
+
+            <div class="row" onclick="window.location.href='{% url 'data_structure' %}'">
+                <div class="left">
+                    <div class="icon purple"><i class="fa-solid fa-code"></i></div>
+                    <span>Data Structures</span>
+                </div>
+                <div>150 Questions</div>
+                <div class="level">
+                    <span class="easy"></span>Easy
+                    <span class="medium"></span>Medium
+                    <span class="hard"></span>Hard
+                </div>
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+
+            <div class="row" onclick="window.location.href='{% url 'algorithms' %}'">
+                <div class="left">
+                    <div class="icon green"><i class="fa-solid fa-diagram-project"></i></div>
+                    <span>Algorithms</span>
+                </div>
+                <div>120 Questions</div>
+                <div class="level">
+                    <span class="easy"></span>Easy
+                    <span class="medium"></span>Medium
+                    <span class="hard"></span>Hard
+                </div>
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+
+            <div class="row" onclick="window.location.href='{% url 'database' %}'">
+                <div class="left">
+                    <div class="icon blue"><i class="fa-solid fa-database"></i></div>
+                    <span>Database</span>
+                </div>
+                <div>100 Questions</div>
+                <div class="level">
+                    <span class="easy"></span>Easy
+                    <span class="medium"></span>Medium
+                    <span class="hard"></span>Hard
+                </div>
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+
+            <div class="row" onclick="window.location.href='{% url 'operating_system' %}'">
+                <div class="left">
+                    <div class="icon orange"><i class="fa-solid fa-desktop"></i></div>
+                    <span>Operating Systems</span>
+                </div>
+                <div>90 Questions</div>
+                <div class="level">
+                    <span class="easy"></span>Easy
+                    <span class="medium"></span>Medium
+                    <span class="hard"></span>Hard
+                </div>
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+
+            <div class="row" onclick="window.location.href='{% url 'computer_networks' %}'">
+                <div class="left">
+                    <div class="icon pink"><i class="fa-solid fa-network-wired"></i></div>
+                    <span>Computer Networks</span>
+                </div>
+                <div>80 Questions</div>
+                <div class="level">
+                    <span class="easy"></span>Easy
+                    <span class="medium"></span>Medium
+                    <span class="hard"></span>Hard
+                </div>
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+
+            <div class="row" onclick="window.location.href='{% url 'oops_concepts' %}'">
+                <div class="left">
+                    <div class="icon purple"><i class="fa-solid fa-lightbulb"></i></div>
+                    <span>OOPs Concepts</span>
+                </div>
+                <div>100 Questions</div>
+                <div class="level">
+                    <span class="easy"></span>Easy
+                    <span class="medium"></span>Medium
+                    <span class="hard"></span>Hard
+                </div>
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+
+            <div class="row" onclick="window.location.href='{% url 'miscellaneous' %}'">
+                <div class="left">
+                    <div class="icon teal"><i class="fa-solid fa-gear"></i></div>
+                    <span>Miscellaneous</span>
+                </div>
+                <div>80 Questions</div>
+                <div class="level">
+                    <span class="easy"></span>Easy
+                    <span class="medium"></span>Medium
+                    <span class="hard"></span>Hard
+                </div>
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+
+        </div>
+        <script src="{% static 'js/Technical Question.js' %}"></script>
+</body>
+
+</html>

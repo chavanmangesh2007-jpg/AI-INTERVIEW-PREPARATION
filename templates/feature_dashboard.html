@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Dashboard - Feature Details</title>
+    
+    <!-- Shared Feature Detail CSS -->
+    <link rel="stylesheet" href="{% static 'css/features_detail.css' %}">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="theme-dashboard">
+
+    <!-- ================= NAVBAR ================= -->
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-robot"></i>
+            <div>
+                <h2>AI Interview</h2>
+                <p>Preparation Assistant</p>
+            </div>
+        </div>
+        <a href="{% url 'home' %}" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+    </nav>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge">Feature Spotlight</span>
+            <h1>Performance <span>Dashboard</span></h1>
+            <p>Track your interview performance over time. View your historical scores, monitor your strengths and weaknesses, and see exactly where you need to improve.</p>
+            
+            <a href="{% url 'dashboard' %}" class="cta-btn">
+                View Dashboard <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="hero-image">
+            <div class="glass-card">
+                <i class="fa-solid fa-chart-pie"></i>
+                <h2>Data-Driven Insights</h2>
+                <p style="margin-top: 15px; color: var(--text-light); font-size: 0.95rem;">Visualize your journey from beginner to interview-ready.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= HIGHLIGHTS ================= -->
+    <section class="highlights">
+        <h2 class="highlights-title">Measure Your Success</h2>
+        
+        <div class="highlights-grid">
+            <div class="highlight-card">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <h3>Interview History</h3>
+                <p>Review every past mock interview. Analyze your answers from weeks ago to see how much your communication has improved.</p>
+            </div>
+            
+            <div class="highlight-card">
+                <i class="fa-solid fa-chart-line"></i>
+                <h3>Score Tracking</h3>
+                <p>Monitor your aggregate scores across different categories (Technical, HR, System Design) to identify your weakest links.</p>
+            </div>
+            
+            <div class="highlight-card">
+                <i class="fa-solid fa-bullseye"></i>
+                <h3>Personalized Recommendations</h3>
+                <p>Based on your lowest scoring areas, our dashboard suggests specific practice modules and questions to focus on next.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

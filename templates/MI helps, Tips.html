@@ -1,0 +1,305 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Preparation Assistant</title>
+
+<link rel="stylesheet" href="{% static 'css/MI helps, Tips.css' %}?v=4">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+    
+    
+<!-- ================= NAVBAR ================= -->
+
+    <nav>
+        <div class="logo1">
+            <i class="fa-solid fa-robot"></i>
+            <div>
+                <h2>AI Interview</h2>
+                <p>Preparation Assistant</p>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}"><i class="fa-solid fa-house nav-icon-home"></i> Home</a></li>
+            <li><a class="active" href="{% url 'mock_interview' %}"><i class="fa-solid fa-user-check nav-icon-mock"></i> Mock
+                    Interview</a></li>
+            <li><a href="{% url 'practice' %}"><i class="fa-solid fa-graduation-cap nav-icon-practice"></i> Practice</a></li>
+            <li><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line nav-icon-dashboard"></i> Dashboard</a></li>
+            <li><a href="{% url 'Contact' %}"><i class="fa-solid fa-envelope nav-icon-contact"></i> Contact</a></li>
+        </ul>
+
+        <div class="buttons">
+            <a href="{% url 'profile' %}"><button class="signup"><i class="fa-solid fa-user"></i> Profile</button></a>
+        </div>
+    </nav>
+
+
+<div class="container1">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-microphone"></i>
+            <div>
+                <h2>Mock Interview</h2>
+                <p>Practice with AI Interviewers</p>
+            </div>
+        </div>
+
+        <ul>
+            <li>
+                <a href="{% url 'mock_interview' %}">
+                    <i class="fa-solid fa-play"></i> Start New Interview
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'previous_interviews' %}">
+                    <i class="fa-regular fa-clock"></i> Previous Interviews
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'saved_questions' %}">
+                    <i class="fa-regular fa-bookmark"></i> Saved Questions
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'Interview_settings' %}">
+                    <i class="fa-solid fa-gear"></i>
+                    Interview Settings
+                </a>
+            </li>
+            <li class="active1">
+                <a href="{% url 'Help' %}">
+                    <i class="fa-solid fa-question-circle"></i>
+                    Help
+                </a>
+            </li>
+        </ul>
+
+        <div class="tip-box">
+            <i class="fa-solid fa-bolt"></i>
+            <h3>Pro Tip</h3>
+            <p>Structure your answer using Situation, Task, Action, and Result (STAR) for best scores.</p>
+        </div>
+    </aside>
+
+
+
+
+
+
+
+
+<div class="container">
+
+    <div class="heading">
+        <h1>Help & Tips</h1>
+        <p>Everything you need to know to make the most of Mock Interview.</p>
+    </div>
+
+    <!-- Top Cards -->
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon green">
+                <i class="fa-solid fa-rocket"></i>
+            </div>
+
+            <h2>Getting Started</h2>
+
+            <ul>
+                <li>How to start a mock interview</li>
+                <li>Choosing the right role</li>
+                <li>Selecting difficulty level</li>
+            </ul>
+
+            <button class="green-btn">Learn More →</button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon blue">
+                <i class="fa-solid fa-microphone"></i>
+            </div>
+
+            <h2>During Interview</h2>
+
+            <ul>
+                <li>Mic & Camera permissions</li>
+                <li>Tips for a smooth interview</li>
+                <li>Time management</li>
+                <li>Answer clearly & confidently</li>
+            </ul>
+
+            <button class="blue-btn">View Tips →</button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon purple">
+                <i class="fa-regular fa-star"></i>
+            </div>
+
+            <h2>Best Practices</h2>
+
+            <ul>
+                <li>Keep resume updated</li>
+                <li>Give examples in answers</li>
+                <li>Maintain eye contact</li>
+                <li>Don't exit until interview is complete</li>
+            </ul>
+
+            <button class="purple-btn">View Best Practices →</button>
+
+        </div>
+
+    </div>
+
+    <!-- FAQ -->
+
+    <div class="middle">
+
+        <div class="faq">
+
+            <div class="title">
+                <h2>Frequently Asked Questions (FAQ)</h2>
+                <a href="#">View All FAQs →</a>
+            </div>
+
+            <details>
+                <summary>How long does a mock interview take?</summary>
+                <p>Usually 20–45 minutes depending on selected difficulty.</p>
+            </details>
+
+            <details>
+                <summary>Where can I see my previous interviews?</summary>
+                <p>Dashboard → Previous Interviews.</p>
+            </details>
+
+            <details>
+                <summary>How can I access my saved questions?</summary>
+                <p>Dashboard → Saved Questions.</p>
+            </details>
+
+            <details>
+                <summary>How do I download my interview report?</summary>
+                <p>Open interview report and click Download PDF.</p>
+            </details>
+
+            <details>
+                <summary>Is my data secure?</summary>
+                <p>Yes. All interview data is encrypted and protected.</p>
+            </details>
+
+        </div>
+
+        <div class="help">
+
+            <h2>Need More Help?</h2>
+
+            <p>We're here to help you at every step.</p>
+
+            <div class="support">
+
+                <i class="fa-solid fa-envelope"></i>
+
+                <div>
+                    <h3>Email Support</h3>
+                    <p>support@mockinterview.com</p>
+                </div>
+
+            </div>
+
+            <div class="support">
+
+                <i class="fa-solid fa-comments"></i>
+
+                <div>
+                    <h3>Live Chat</h3>
+                    <p>Chat with our support team</p>
+                </div>
+
+            </div>
+
+            <div class="support">
+
+                <i class="fa-solid fa-book"></i>
+
+                <div>
+                    <h3>User Guide</h3>
+                    <p>Step-by-step documentation</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Resources -->
+
+    <div class="resources">
+
+        <h2>Video Guides & Resources</h2>
+
+        <p>Learn with our tutorials and resources.</p>
+
+        <div class="resource-grid">
+
+            <div class="resource">
+                <i class="fa-regular fa-circle-play"></i>
+                <h3>Watch Tutorial</h3>
+                <p>Step-by-step video guide</p>
+                <button>Watch Now</button>
+            </div>
+
+            <div class="resource">
+                <i class="fa-solid fa-book-open"></i>
+                <h3>Read Documentation</h3>
+                <p>Detailed help documents</p>
+                <button>Read Now</button>
+            </div>
+
+            <div class="resource">
+                <i class="fa-solid fa-video"></i>
+                <h3>Demo Interview</h3>
+                <p>See how it works</p>
+                <button>Try Demo</button>
+            </div>
+
+            <div class="resource">
+                <i class="fa-regular fa-lightbulb"></i>
+                <h3>Tips & Tricks</h3>
+                <p>Improve your performance</p>
+                <button>Explore</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="bottom">
+        <h3>⭐ Practice more, improve more, succeed more!</h3>
+    </div>
+
+</div>
+</div>
+<script src="{% static 'js/MI helps, Tips.js' %}"></script>
+</body>
+</html>

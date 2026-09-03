@@ -1,0 +1,75 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}{% if edit_q %}Edit Question{% else %}Add Question{% endif %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-container { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; max-width: 800px; backdrop-filter: blur(12px); }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-muted); font-size: 0.9rem; }
+    .form-control { width: 100%; padding: 0.8rem 1rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-family: inherit; font-size: 0.95rem; }
+    .form-control:focus { outline: none; border-color: var(--primary); }
+    select.form-control { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; }
+    textarea.form-control { resize: vertical; min-height: 100px; }
+    .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+    .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; }
+    .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+    .row { display: flex; gap: 1rem; }
+    .col { flex: 1; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>{% if edit_q %}Edit Question{% else %}Add New Question{% endif %}</h1>
+        <p style="color: var(--text-muted); margin-top: 5px;">Manage the global Question Bank.</p>
+    </div>
+</div>
+
+<div class="form-container">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Question Text *</label>
+            <textarea name="question_text" class="form-control" required rows="3">{{ edit_q.question_text }}</textarea>
+        </div>
+        
+        <div class="row">
+            <div class="form-group col">
+                <label>Category *</label>
+                <select name="category" class="form-control" required>
+                    <option value="Technical" {% if edit_q.category == 'Technical' %}selected{% endif %}>Technical</option>
+                    <option value="HR" {% if edit_q.category == 'HR' %}selected{% endif %}>HR / Behavioral</option>
+                    <option value="Coding" {% if edit_q.category == 'Coding' %}selected{% endif %}>Coding / Algorithms</option>
+                    <option value="Aptitude" {% if edit_q.category == 'Aptitude' %}selected{% endif %}>Aptitude</option>
+                    <option value="Company-Specific" {% if edit_q.category == 'Company-Specific' %}selected{% endif %}>Company-Specific</option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <label>Difficulty *</label>
+                <select name="difficulty" class="form-control" required>
+                    <option value="Easy" {% if edit_q.difficulty == 'Easy' %}selected{% endif %}>Easy</option>
+                    <option value="Medium" {% if edit_q.difficulty == 'Medium' %}selected{% endif %}>Medium</option>
+                    <option value="Hard" {% if edit_q.difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Sub-Category (Optional)</label>
+            <input type="text" name="sub_category" class="form-control" placeholder="e.g. System Design, Python, Google" value="{{ edit_q.sub_category }}">
+        </div>
+        
+        <div class="form-group">
+            <label>Sample Answer / AI Guidance (Optional)</label>
+            <textarea name="sample_answer" class="form-control" rows="5" placeholder="Provide a sample answer or grading criteria for the AI.">{{ edit_q.sample_answer }}</textarea>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Question</button>
+            <a href="{% url 'admin_questions' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Preparation Assistant</title>
+
+<link rel="stylesheet" href="{% static 'css/Saved Question MI.css' %}?v=5">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+    
+  
+<!-- ================= NAVBAR ================= -->
+    <nav>
+        <div class="logo1">
+            <i class="fa-solid fa-robot"></i>
+            <div>
+                <h2>AI Interview</h2>
+                <p>Preparation Assistant</p>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}"><i class="fa-solid fa-house nav-icon-home"></i> Home</a></li>
+            <li><a class="active" href="{% url 'mock_interview' %}"><i class="fa-solid fa-user-check nav-icon-mock"></i> Mock
+                    Interview</a></li>
+            <li><a href="{% url 'practice' %}"><i class="fa-solid fa-graduation-cap nav-icon-practice"></i> Practice</a></li>
+            <li><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line nav-icon-dashboard"></i> Dashboard</a></li>
+            <li><a href="{% url 'Contact' %}"><i class="fa-solid fa-envelope nav-icon-contact"></i> Contact</a></li>
+        </ul>
+
+        <div class="buttons">
+            <a href="{% url 'profile' %}"><button class="signup"><i class="fa-solid fa-user"></i> Profile</button></a>
+        </div>
+    </nav>
+
+
+<div class="container1">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-microphone"></i>
+            <div>
+                <h2>Mock Interview</h2>
+                <p>Practice with AI Interviewers</p>
+            </div>
+        </div>
+
+        <ul>
+            <li>
+                <a href="{% url 'mock_interview' %}">
+                    <i class="fa-solid fa-play"></i> Start New Interview
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'previous_interviews' %}">
+                    <i class="fa-regular fa-clock"></i> Previous Interviews
+                </a>
+            </li>
+            <li class="active1">
+                <a href="{% url 'saved_questions' %}">
+                    <i class="fa-regular fa-bookmark"></i> Saved Questions
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'Interview_settings' %}">
+                    <i class="fa-solid fa-gear"></i>
+                    Interview Settings
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'Help' %}">
+                    <i class="fa-solid fa-question-circle"></i>
+                    Help
+                </a>
+            </li>
+        </ul>
+
+        <div class="tip-box">
+            <i class="fa-solid fa-bolt"></i>
+            <h3>Pro Tip</h3>
+            <p>Structure your answer using Situation, Task, Action, and Result (STAR) for best scores.</p>
+        </div>
+    </aside>
+
+
+
+
+
+
+  
+<div class="container">
+
+<div class="header">
+
+<div class="title">
+
+<h1><i class="fa-solid fa-bookmark"></i> Saved Questions</h1>
+
+<p>View and manage all your saved interview questions.</p>
+
+</div>
+
+<div class="badge">
+<i class="fa-regular fa-bookmark"></i>
+{{ saved_questions|length }} Questions Saved
+</div>
+
+</div>
+
+<div class="toolbar">
+
+<div class="search-box">
+<i class="fa-solid fa-magnifying-glass"></i>
+<input type="text" placeholder="Search saved questions...">
+</div>
+
+<select>
+<option>All Roles</option>
+<option>Software Engineer</option>
+<option>Frontend Developer</option>
+<option>Data Scientist</option>
+<option>UI/UX Designer</option>
+</select>
+
+</div>
+
+{% for question in saved_questions %}
+<div class="card">
+    <div class="left">
+        <span class="role">{{ question.category }}</span>
+        <h2>{{ question.question_title }}</h2>
+        <div class="meta">
+            <span><i class="fa-solid fa-tag"></i> Technical</span>
+            <span><i class="fa-solid fa-signal"></i> {{ question.difficulty|default:"Medium" }}</span>
+            <span><i class="fa-regular fa-clock"></i> 2 min</span>
+        </div>
+    </div>
+    <div class="right">
+        <button class="view-answer-btn" data-answer="{{ question.answer_notes|default:'Sample answer is not currently available for this saved question. You can practice this question in the Mock Interview section to get detailed AI feedback!' }}">View Answer</button>
+        <button class="unsave-btn" data-title="{{ question.question_title }}" data-category="{{ question.category }}" style="margin-left: 10px;">
+            <i class="fa-solid fa-bookmark"></i> Unsave
+        </button>
+        <p><i class="fa-regular fa-calendar"></i> Saved on {{ question.created_at|date:"d M Y" }}</p>
+    </div>
+</div>
+{% empty %}
+<div class="card" style="text-align: center; justify-content: center; padding: 40px;">
+    <h2>No saved questions found.</h2>
+    <p style="margin-top: 10px; color: #718096;">Head over to the Practice tab to start saving questions!</p>
+</div>
+{% endfor %}
+
+
+</div> 
+</div> 
+ {% csrf_token %}
+ <script src="{% static 'js/Saved Question MI.js' %}"></script>
+</body>
+</html>

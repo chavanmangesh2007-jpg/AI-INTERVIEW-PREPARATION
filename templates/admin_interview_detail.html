@@ -1,0 +1,118 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Interview Session Details{% endblock %}
+
+{% block extra_css %}
+<style>
+    .details-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; backdrop-filter: blur(12px); }
+    .details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+    .detail-item label { color: var(--text-muted); font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 0.3rem; }
+    .detail-item div { font-weight: 600; font-size: 1.1rem; }
+    
+    .qa-card { background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .q-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .q-text { font-size: 1.1rem; font-weight: 600; color: #fff; }
+    .q-score { background: rgba(79, 70, 229, 0.2); color: #818cf8; padding: 5px 12px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
+    
+    .answer-box { margin-bottom: 1rem; }
+    .answer-box h4 { font-size: 0.85rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+    .answer-content { background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 8px; font-size: 0.95rem; line-height: 1.5; }
+    
+    .ai-feedback { background: rgba(16, 185, 129, 0.05); border-left: 4px solid #10b981; }
+    .user-answer { background: rgba(59, 130, 246, 0.05); border-left: 4px solid #3b82f6; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <a href="{% url 'admin_interviews' %}" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; margin-bottom: 10px; display: inline-block;">
+            <i class="fa-solid fa-arrow-left"></i> Back to Interviews
+        </a>
+        <h1>Session Details</h1>
+        <p style="color: var(--text-muted); margin-top: 5px;">Review candidate performance and AI feedback.</p>
+    </div>
+    <form method="POST" action="{% url 'admin_interview_delete' session.id %}" onsubmit="return confirm('Are you sure you want to delete this session?');">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete Session</button>
+    </form>
+</div>
+
+<div class="details-card">
+    <div class="details-grid">
+        <div class="detail-item">
+            <label>Candidate</label>
+            <div>{{ session.user.profile.full_name|default:session.user.username }}</div>
+        </div>
+        <div class="detail-item">
+            <label>Topic / Role</label>
+            <div>{{ session.topic }}</div>
+        </div>
+        <div class="detail-item">
+            <label>Difficulty</label>
+            <div>{{ session.difficulty }}</div>
+        </div>
+        <div class="detail-item">
+            <label>Status</label>
+            <div style="text-transform: capitalize;">{{ session.status }}</div>
+        </div>
+        <div class="detail-item">
+            <label>Total Score</label>
+            <div style="color: {% if session.total_score >= 70 %}#34d399{% elif session.total_score >= 40 %}#fbbf24{% else %}#f87171{% endif %};">
+                {{ session.total_score }}/100
+            </div>
+        </div>
+        <div class="detail-item">
+            <label>Date</label>
+            <div>{{ session.created_at|date:"M d, Y H:i" }}</div>
+        </div>
+    </div>
+    
+    {% if session.feedback_summary %}
+    <div style="margin-top: 2rem;">
+        <label style="color: var(--text-muted); font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 0.5rem;">Overall AI Summary</label>
+        <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; font-size: 0.95rem; line-height: 1.6;">
+            {{ session.feedback_summary }}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<h2 class="section-header">Questions & Answers</h2>
+{% for qa in session.questions.all %}
+<div class="qa-card">
+    <div class="q-header">
+        <div class="q-text">Q{{ forloop.counter }}: {{ qa.question_text }}</div>
+        <div class="q-score">Score: {{ qa.score }}/100</div>
+    </div>
+    
+    <div class="answer-box">
+        <h4>Candidate Answer</h4>
+        <div class="answer-content user-answer">
+            {{ qa.user_answer|default:"<i style='color: #64748b;'>No answer provided.</i>"|safe }}
+        </div>
+    </div>
+    
+    <div class="answer-box">
+        <h4>AI Feedback</h4>
+        <div class="answer-content ai-feedback">
+            {{ qa.ai_feedback|default:"<i style='color: #64748b;'>No feedback generated.</i>"|safe }}
+        </div>
+    </div>
+    
+    {% if qa.suggested_answer %}
+    <div class="answer-box">
+        <h4>Suggested Answer</h4>
+        <div class="answer-content" style="border-left: 4px solid #8b5cf6; background: rgba(139, 92, 246, 0.05);">
+            {{ qa.suggested_answer }}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% empty %}
+<div style="text-align: center; padding: 3rem; color: var(--text-muted); background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border);">
+    No questions found for this session.
+</div>
+{% endfor %}
+
+{% endblock %}

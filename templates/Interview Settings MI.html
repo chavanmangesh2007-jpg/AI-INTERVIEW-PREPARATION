@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Preparation Assistant</title>
+
+<link rel="stylesheet" href="{% static 'css/Interview Settings MI.css' %}?v=5">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+    
+<!-- ================= NAVBAR ================= -->
+
+    <nav>
+        <div class="logo1">
+            <i class="fa-solid fa-robot"></i>
+            <div>
+                <h2>AI Interview</h2>
+                <p>Preparation Assistant</p>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}"><i class="fa-solid fa-house nav-icon-home"></i> Home</a></li>
+            <li><a class="active" href="{% url 'mock_interview' %}"><i class="fa-solid fa-user-check nav-icon-mock"></i> Mock
+                    Interview</a></li>
+            <li><a href="{% url 'practice' %}"><i class="fa-solid fa-graduation-cap nav-icon-practice"></i> Practice</a></li>
+            <li><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line nav-icon-dashboard"></i> Dashboard</a></li>
+            <li><a href="{% url 'Contact' %}"><i class="fa-solid fa-envelope nav-icon-contact"></i> Contact</a></li>
+        </ul>
+
+        <div class="buttons">
+            <a href="{% url 'profile' %}"><button class="signup"><i class="fa-solid fa-user"></i> Profile</button></a>
+        </div>
+    </nav>
+
+
+<div class="container1">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-microphone"></i>
+            <div>
+                <h2>Mock Interview</h2>
+                <p>Practice with AI Interviewers</p>
+            </div>
+        </div>
+
+        <ul>
+            <li>
+                <a href="{% url 'mock_interview' %}">
+                    <i class="fa-solid fa-play"></i> Start New Interview
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'previous_interviews' %}">
+                    <i class="fa-regular fa-clock"></i> Previous Interviews
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'saved_questions' %}">
+                    <i class="fa-regular fa-bookmark"></i> Saved Questions
+                </a>
+            </li>
+            <li class="active1">
+                <a href="{% url 'Interview_settings' %}">
+                    <i class="fa-solid fa-gear"></i>
+                    Interview Settings
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'Help' %}">
+                    <i class="fa-solid fa-question-circle"></i>
+                    Help
+                </a>
+            </li>
+        </ul>
+
+        <div class="tip-box">
+            <i class="fa-solid fa-bolt"></i>
+            <h3>Pro Tip</h3>
+            <p>Structure your answer using Situation, Task, Action, and Result (STAR) for best scores.</p>
+        </div>
+    </aside>
+
+
+
+
+
+
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <div class="title">
+            <div class="icon">
+                <i class="fa-solid fa-gear"></i>
+            </div>
+
+            <div>
+                <h2>Interview Settings</h2>
+                <p>Customize your interview experience</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Django Messages -->
+    {% if messages %}
+    <div class="messages" style="margin-bottom: 20px;">
+        {% for message in messages %}
+        <div class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Preferences -->
+        <div class="card">
+            <h3>Interview Preferences</h3>
+
+            <div class="row">
+                <div class="left">
+                    <div class="box purple">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <div>
+                        <h4>Interview Type</h4>
+                        <p>Choose the type of interview you want to practice</p>
+                    </div>
+                </div>
+                <select name="interview_type">
+                    <option {% if setting.interview_type == 'Technical Interview' %}selected{% endif %}>Technical Interview</option>
+                    <option {% if setting.interview_type == 'HR Interview' %}selected{% endif %}>HR Interview</option>
+                    <option {% if setting.interview_type == 'Behavioral Interview' %}selected{% endif %}>Behavioral Interview</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="left">
+                    <div class="box blue">
+                        <i class="fa-solid fa-chart-column"></i>
+                    </div>
+                    <div>
+                        <h4>Difficulty Level</h4>
+                        <p>Select question difficulty</p>
+                    </div>
+                </div>
+                <select name="difficulty_level">
+                    <option {% if setting.difficulty_level == 'Easy' %}selected{% endif %}>Easy</option>
+                    <option {% if setting.difficulty_level == 'Medium' %}selected{% endif %}>Medium</option>
+                    <option {% if setting.difficulty_level == 'Hard' %}selected{% endif %}>Hard</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="left">
+                    <div class="box green">
+                        <i class="fa-regular fa-clock"></i>
+                    </div>
+                    <div>
+                        <h4>Interview Duration</h4>
+                        <p>Set duration for your mock interview</p>
+                    </div>
+                </div>
+                <select name="interview_duration">
+                    <option {% if setting.interview_duration == '15 Minutes' %}selected{% endif %}>15 Minutes</option>
+                    <option {% if setting.interview_duration == '30 Minutes' %}selected{% endif %}>30 Minutes</option>
+                    <option {% if setting.interview_duration == '45 Minutes' %}selected{% endif %}>45 Minutes</option>
+                    <option {% if setting.interview_duration == '60 Minutes' %}selected{% endif %}>60 Minutes</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="left">
+                    <div class="box orange">
+                        <i class="fa-solid fa-question"></i>
+                    </div>
+                    <div>
+                        <h4>Number of Questions</h4>
+                        <p>Select number of questions</p>
+                    </div>
+                </div>
+                <select name="number_of_questions">
+                    <option {% if setting.number_of_questions == '5 Questions' %}selected{% endif %}>5 Questions</option>
+                    <option {% if setting.number_of_questions == '10 Questions' %}selected{% endif %}>10 Questions</option>
+                    <option {% if setting.number_of_questions == '20 Questions' %}selected{% endif %}>20 Questions</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="left">
+                    <div class="box pink">
+                        <i class="fa-solid fa-language"></i>
+                    </div>
+                    <div>
+                        <h4>Language</h4>
+                        <p>Choose your preferred language</p>
+                    </div>
+                </div>
+                <select name="language">
+                    <option {% if setting.language == 'English' %}selected{% endif %}>English</option>
+                    <option {% if setting.language == 'Hindi' %}selected{% endif %}>Hindi</option>
+                    <option {% if setting.language == 'Marathi' %}selected{% endif %}>Marathi</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- Bottom Cards -->
+        <div class="bottom">
+            <div class="card">
+                <h3>Additional Options</h3>
+
+                <label>
+                    <input type="checkbox" name="enable_voice" {% if setting.enable_voice %}checked{% endif %}>
+                    Enable Voice Interaction
+                </label>
+
+                <label>
+                    <input type="checkbox" name="show_hints" {% if setting.show_hints %}checked{% endif %}>
+                    Show Hints
+                </label>
+
+                <label>
+                    <input type="checkbox" name="record_interview" {% if setting.record_interview %}checked{% endif %}>
+                    Record Interview
+                </label>
+            </div>
+
+            <div class="card">
+                <h3>AI Feedback Performance</h3>
+
+                <label>
+                    <input type="radio" name="feedback_performance" value="Detailed Feedback" {% if setting.feedback_performance == 'Detailed Feedback' %}checked{% endif %}>
+                    Detailed Feedback
+                </label>
+
+                <label>
+                    <input type="radio" name="feedback_performance" value="Short Feedback" {% if setting.feedback_performance == 'Short Feedback' %}checked{% endif %}>
+                    Short Feedback
+                </label>
+
+                <label>
+                    <input type="radio" name="feedback_performance" value="No Feedback" {% if setting.feedback_performance == 'No Feedback' %}checked{% endif %}>
+                    No Feedback
+                </label>
+            </div>
+        </div>
+
+        <div class="save">
+            <button type="submit">
+                <i class="fa-regular fa-floppy-disk"></i>
+                Save Settings
+            </button>
+        </div>
+    </form>
+</div>
+</div>
+    <script src="{% static 'js/Interview Settings MI.js' %}"></script>
+</body>
+</html>

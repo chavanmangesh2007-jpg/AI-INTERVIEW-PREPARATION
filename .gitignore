@@ -1,0 +1,11 @@
+*.pyc
+__pycache__/
+*.sqlite3
+.env
+.venv
+venv/
+env/
+staticfiles_build/
+staticfiles/
+.vercel
+.DS_Store

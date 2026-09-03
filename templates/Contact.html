@@ -1,0 +1,316 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - AI Interview Assistant</title>
+    <link rel="stylesheet" href="{% static 'css/Contact.css' %}?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <nav>
+        <div class="logo1">
+            <i class="fa-solid fa-robot"></i>
+            <div>
+                <h2>AI Interview</h2>
+                <p>Preparation Assistant</p>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}"><i class="fa-solid fa-house nav-icon-home"></i> Home</a></li>
+            <li><a href="{% url 'mock_interview' %}"><i class="fa-solid fa-user-check nav-icon-mock"></i> Mock
+                    Interview</a></li>
+            <li><a href="{% url 'practice' %}"><i class="fa-solid fa-graduation-cap nav-icon-practice"></i> Practice</a>
+            </li>
+            <li><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line nav-icon-dashboard"></i> Dashboard</a>
+            </li>
+            <li><a class="active" href="{% url 'Contact' %}"><i class="fa-solid fa-envelope nav-icon-contact"></i>
+                    Contact</a></li>
+        </ul>
+
+        <div class="buttons1">
+            <a href="{% url 'profile' %}"><button class="signup"><i class="fa-solid fa-user"></i> Profile</button></a>
+        </div>
+    </nav>
+
+    <section class="contact">
+        <div class="heading">
+            <div>
+                <span class="badge">📞 We're here to help</span>
+                <h1>Contact <span>Us</span></h1>
+                <p>Have questions, feedback, or need support?<br>We'd love to hear from you.</p>
+            </div>
+            <div class="robot">
+                <img src="https://imgcdn.stablediffusionweb.com/2025/12/9/f609ad69-a9af-47e5-9eeb-09774a077a4f.webp"
+                    alt="Contact Robot">
+            </div>
+        </div>
+
+        {% if messages %}
+        <div style="margin-bottom: 20px; max-width: 1200px; margin-left: auto; margin-right: auto;">
+            {% for message in messages %}
+            <div
+                style="padding: 12px 18px; border-radius: 8px; color: #fff; background-color: {% if message.tags == 'error' %}#e74c3c{% else %}#2ecc71{% endif %}; font-size: 15px;">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="contact-container">
+            <div class="left">
+                <div class="card">
+                    <div class="icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div>
+                        <h3>Email Us</h3>
+                        <p>aiinterviewprep05@gmail.com</p>
+                        <small>Reply within 24 Hours</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icon"><i class="fa-solid fa-phone"></i></div>
+                    <div>
+                        <h3>Call Us</h3>
+                        <p>+91 7219621129</p>
+                        <small>Mon - Fri, 9AM - 6PM</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <h3>Our Office</h3>
+                        <p>Parner , Ahilyanagar,<br>Maharashtra, India</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right">
+                <h2><i class="fa-regular fa-envelope"></i> Send us a Message</h2>
+
+                <form method="POST" action="{% url 'Contact' %}">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="input-box">
+                            <label>Name</label>
+                            <input type="text" name="name" placeholder="Enter your name" required>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+
+                    <div class="input-box">
+                        <label>Subject</label>
+                        <select name="subject">
+                            <option value="General Inquiry">General Inquiry</option>
+                            <option value="Technical Support">Technical Support</option>
+                            <option value="Feedback">Feedback</option>
+                            <option value="Billing">Billing</option>
+                        </select>
+                    </div>
+
+                    <div class="input-box">
+                        <label>Message</label>
+                        <textarea name="message" rows="5" placeholder="Type your message..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="button2" style="width: 100%; border: none; cursor: pointer;">
+                        <i class="fa-solid fa-paper-plane"></i> Send Message
+                    </button>
+
+                    <p class="secure" style="margin-top: 15px;">
+                        <i class="fa-solid fa-lock"></i> Your information is secure and never shared.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <style>
+    /* Compact Reduced Footer Styles */
+    .premium-footer {
+        background-color: #050505;
+        color: #A3A3A3;
+        font-family: 'Poppins', sans-serif;
+        position: relative;
+        padding: 30px 0 15px;
+        margin-top: 40px;
+    }
+    .footer-divider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        opacity: 0.5;
+    }
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 30px;
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 30px;
+    }
+    @media (max-width: 768px) {
+        .footer-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+    }
+    .footer-brand h2 {
+        color: #FFFFFF;
+        font-size: 20px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+    }
+    .footer-brand h2 i {
+        color: #D4AF37;
+    }
+    .footer-brand p {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+        color: #A3A3A3;
+    }
+    .footer-social {
+        display: flex;
+        gap: 10px;
+    }
+    .footer-social a {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #111;
+        border: 1px solid #333;
+        color: #D4AF37;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 13px;
+        transition: 0.3s;
+    }
+    .footer-social a:hover {
+        background: #D4AF37;
+        color: #000;
+        border-color: #D4AF37;
+    }
+    .footer-col h3 {
+        color: #FFFFFF;
+        font-size: 14px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        display: inline-block;
+    }
+    .footer-col h3::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        width: 100%;
+        height: 1px;
+        background: #D4AF37;
+    }
+    .footer-col ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .footer-col ul li {
+        margin-bottom: 6px;
+    }
+    .footer-col ul li a {
+        color: #A3A3A3;
+        text-decoration: none;
+        font-size: 13px;
+        transition: color 0.3s;
+    }
+    .footer-col ul li a:hover {
+        color: #D4AF37;
+    }
+    .footer-bottom {
+        max-width: 1200px;
+        margin: 20px auto 0;
+        padding: 15px 30px 0;
+        border-top: 1px solid #222;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 12px;
+    }
+    .tech-stack span {
+        color: #D4AF37;
+        font-weight: 500;
+    }
+    </style>
+
+    <footer class="premium-footer">
+        <div class="footer-divider"></div>
+        <div class="footer-container">
+            <!-- Brand Section -->
+            <div class="footer-brand">
+                <h2><i class="fa-solid fa-microchip"></i> AI Interview Assistant</h2>
+                <p>AI-powered mock interviews, real-time feedback, and personalized practice to help you land your dream job.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'mock_interview' %}">Mock Interview</a></li>
+                    <li><a href="{% url 'practice' %}">Practice Questions</a></li>
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'previous_interviews' %}">Interview History</a></li>
+                </ul>
+            </div>
+
+            <!-- Support & Legal -->
+            <div class="footer-col">
+                <h3>Support & Legal</h3>
+                <ul>
+                    <li><a href="{% url 'Contact' %}">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 AI Interview Assistant. All rights reserved.</p>
+            <p class="tech-stack">Built with <span>Python</span> &bull; <span>Django</span> &bull; <span>Gemini AI</span></p>
+        </div>
+    </footer>
+</body>
+
+</html>

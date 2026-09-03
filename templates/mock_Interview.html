@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Interview - AI Interview Assistant</title>
+    <link rel="stylesheet" href="{% static 'css/Mock Interview.css' %}?v=3">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <nav>
+        <div class="logo1">
+            <i class="fa-solid fa-robot"></i>
+            <div>
+                <h2>AI Interview</h2>
+                <p>Preparation Assistant</p>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}"><i class="fa-solid fa-house nav-icon-home"></i> Home</a></li>
+            <li><a class="active" href="{% url 'mock_interview' %}"><i class="fa-solid fa-user-check nav-icon-mock"></i> Mock
+                    Interview</a></li>
+            <li><a href="{% url 'practice' %}"><i class="fa-solid fa-graduation-cap nav-icon-practice"></i> Practice</a></li>
+            <li><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line nav-icon-dashboard"></i> Dashboard</a></li>
+            <li><a href="{% url 'Contact' %}"><i class="fa-solid fa-envelope nav-icon-contact"></i> Contact</a></li>
+        </ul>
+
+        <div class="buttons">
+            <a href="{% url 'profile' %}"><button class="signup"><i class="fa-solid fa-user"></i> Profile</button></a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-microphone"></i>
+                <div>
+                    <h2>Mock Interview</h2>
+                    <p>Practice with AI Interviewers</p>
+                </div>
+            </div>
+
+            <ul>
+                <li class="active1">
+                    <a href="{% url 'mock_interview' %}">
+                        <i class="fa-solid fa-play"></i> Start New Interview
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'previous_interviews' %}">
+                        <i class="fa-regular fa-clock"></i> Previous Interviews
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'saved_questions' %}">
+                        <i class="fa-regular fa-bookmark"></i> Saved Questions
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'Interview_settings' %}">
+                        <i class="fa-solid fa-gear"></i>
+                        Interview Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'Help' %}">
+                        <i class="fa-solid fa-question-circle"></i>
+                        Help
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tip-box">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Pro Tip</h3>
+                <p>Structure your answer using Situation, Task, Action, and Result (STAR) for best scores.</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+
+            {% if messages %}
+            <div style="margin-bottom: 20px;">
+                {% for message in messages %}
+                <div
+                    style="padding: 12px 18px; border-radius: 8px; color: #fff; background-color: {% if message.tags == 'error' %}#e74c3c{% else %}#2ecc71{% endif %}; font-size: 15px;">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Setup New Session Mode -->
+            <h1>Start a Mock Interview</h1>
+            <p class="subtitle">Choose your target role and difficulty level to generate AI interview questions.</p>
+
+            <form method="POST" action="{% url 'start_interview' %}">
+                {% csrf_token %}
+
+                <input type="hidden" name="topic" id="selectedTopic" value="Software Engineer">
+
+                <section class="card">
+                    <h2>1. Select Interview Role</h2>
+                    <div class="top-search">
+                        <input type="text" placeholder="Search for a role...">
+                    </div>
+
+                    <div class="roles">
+                        <div class="role-card"
+                            onclick="document.getElementById('selectedTopic').value='Frontend Developer';">
+                            <i class="fa-solid fa-code"></i>
+                            <div>
+                                <h3>Frontend Developer</h3>
+                                <span>Software Development</span>
+                            </div>
+                        </div>
+
+                        <div class="role-card active-role"
+                            onclick="document.getElementById('selectedTopic').value='Software Engineer';">
+                            <i class="fa-solid fa-laptop-code"></i>
+                            <div>
+                                <h3>Software Engineer</h3>
+                                <span>Software Development</span>
+                            </div>
+                        </div>
+
+                        <div class="role-card"
+                            onclick="document.getElementById('selectedTopic').value='Data Scientist';">
+                            <i class="fa-solid fa-chart-simple"></i>
+                            <div>
+                                <h3>Data Scientist</h3>
+                                <span>Data Science</span>
+                            </div>
+                        </div>
+
+                        <div class="role-card"
+                            onclick="document.getElementById('selectedTopic').value='Backend Developer';">
+                            <i class="fa-solid fa-server"></i>
+                            <div>
+                                <h3>Backend Developer</h3>
+                                <span>Software Development</span>
+                            </div>
+                        </div>
+
+                        <div class="role-card"
+                            onclick="document.getElementById('selectedTopic').value='HR Behavioral';">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <div>
+                                <h3>HR Behavioral</h3>
+                                <span>HR & Management</span>
+                            </div>
+                        </div>
+
+                        <div class="role-card"
+                            onclick="document.getElementById('selectedTopic').value='System Design';">
+                            <i class="fa-solid fa-pen-ruler"></i>
+                            <div>
+                                <h3>System Design</h3>
+                                <span>Architecture</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h2>2. Interview Settings</h2>
+                    <div class="settings">
+                        <select name="difficulty"
+                            style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit;">
+                            <option value="Easy">Easy</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+
+                    <div class="features" style="margin-top: 20px;">
+                        <div>
+                            <i class="fa-solid fa-robot"></i>
+                            <h4>AI Interviewer</h4>
+                            <p>Realistic AI Questions</p>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-clock"></i>
+                            <h4>Real-Time Feedback</h4>
+                            <p>Instant Suggestions</p>
+                        </div>
+                        <div>
+                            <i class="fa-regular fa-file-lines"></i>
+                            <h4>Detailed Report</h4>
+                            <p>Performance Evaluation</p>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="start-btn" style="margin-top: 20px;">
+                        <i class="fa-solid fa-play"></i> Start Mock Interview
+                    </button>
+                </section>
+            </form>
+
+        </main>
+
+    </div>
+    <script src="{% static 'js/Mock Interview.js' %}"></script>
+</body>
+
+</html>

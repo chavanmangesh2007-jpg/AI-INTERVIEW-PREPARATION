@@ -1,0 +1,368 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI Interview Assistant</title>
+    <link rel="stylesheet" href="{% static 'css/Dashboard.css' %}?v=3">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <nav>
+        <div class="logo1">
+            <i class="fa-solid fa-robot"></i>
+            <div>
+                <h2>AI Interview</h2>
+                <p>Preparation Assistant</p>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'home' %}"><i class="fa-solid fa-house nav-icon-home"></i> Home</a></li>
+            <li><a href="{% url 'mock_interview' %}"><i class="fa-solid fa-user-check nav-icon-mock"></i> Mock
+                    Interview</a></li>
+            <li><a href="{% url 'practice' %}"><i class="fa-solid fa-graduation-cap nav-icon-practice"></i> Practice</a>
+            </li>
+            <li><a class="active" href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line nav-icon-dashboard"></i>
+                    Dashboard</a></li>
+            <li><a href="{% url 'Contact' %}"><i class="fa-solid fa-envelope nav-icon-contact"></i> Contact</a></li>
+        </ul>
+
+        <div class="buttons">
+            <a href="{% url 'profile' %}"><button class="signup"><i class="fa-solid fa-user"></i> Profile</button></a>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <div class="main">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="welcome">
+                {% if is_new_user %}
+                <h1>Welcome, {{ user.first_name|default:user.username }}! 👋</h1>
+                {% else %}
+                <h1>Welcome back, {{ user.first_name|default:user.username }}! 👋</h1>
+                {% endif %}
+                <p>Track your interview scores, resume analytics, and practice history.</p>
+            </div>
+        </div>
+
+        {% if messages %}
+        <div style="margin-bottom: 20px;">
+            {% for message in messages %}
+            <div
+                style="padding: 12px 18px; border-radius: 8px; color: #fff; background-color: {% if message.tags == 'error' %}#e74c3c{% else %}#2ecc71{% endif %}; font-size: 15px;">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Stats -->
+        <div class="cards">
+            <div class="card">
+                <div class="icon purple">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <h2>{{ total_interviews }}</h2>
+                <h3>Mock Interviews</h3>
+                <p>Total Conducted</p>
+            </div>
+
+            <div class="card">
+                <div class="icon green">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h2>{% if latest_resume %}{{ latest_resume.overall_score }}/100{% else %}N/A{% endif %}</h2>
+                <h3>Resume Score</h3>
+                <p>Latest Evaluation</p>
+            </div>
+
+            <div class="card">
+                <div class="icon orange">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h2>{{ avg_score }}%</h2>
+                <h3>Average Score</h3>
+                <p>Across All Sessions</p>
+            </div>
+
+            <div class="card">
+                <div class="icon blue">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <h2>{{ saved_questions_count }}</h2>
+                <h3>Saved Questions</h3>
+                <p>Bookmarked Items</p>
+            </div>
+        </div>
+
+        <!-- Recent + Progress -->
+        <div class="middle">
+            <div class="recent">
+                <div class="title">
+                    <h2>Recent Mock Interviews</h2>
+                    <a href="{% url 'previous_interviews' %}">View All</a>
+                </div>
+
+                {% for session in recent_sessions %}
+                <div class="interview">
+                    <div class="left">
+                        <div class="small purple">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <div>
+                            <h3><a href="{% url 'session_detail' session.id %}"
+                                    style="text-decoration: none; color: inherit;">{{ session.topic }}</a></h3>
+                            <p>{{ session.difficulty }} • {{ session.created_at|date:"M d, Y" }}</p>
+                        </div>
+                    </div>
+                    <div class="score {% if session.total_score >= 75 %}green-bg{% else %}orange-bg{% endif %}">
+                        {{ session.total_score }}%
+                    </div>
+                </div>
+                {% empty %}
+                <p style="padding: 20px; color: #718096;">No mock interviews conducted yet. <a
+                        href="{% url 'mock_interview' %}">Start one now!</a></p>
+                {% endfor %}
+            </div>
+
+            <!-- Progress -->
+            <div class="progress">
+                <h2>Overall Readiness</h2>
+                <div class="circle"
+                    style="background:conic-gradient(#D4AF37 {{ avg_score|default:'0' }}%, #333 0); box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);">
+                    <div class="inside">
+                        <h1>{{ avg_score|default:"0" }}%</h1>
+                        <p>Readiness</p>
+                    </div>
+                </div>
+
+                <div class="skill">
+                    <p>Technical Knowledge</p>
+                    <div class="bar"><span class="bar-blue" style="width:{{ avg_score|default:'50' }}%;"></span></div>
+                </div>
+
+                <div class="skill">
+                    <p>Answer Structure & STAR Method</p>
+                    <div class="bar"><span class="bar-purple" style="width:{{ avg_score|default:'60' }}%;"></span></div>
+                </div>
+
+                <div class="skill">
+                    <p>Communication & Depth</p>
+                    <div class="bar"><span class="bar-green" style="width:{{ avg_score|default:'70' }}%;"></span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <h2 class="quick-title">Quick Actions</h2>
+        <div class="quick">
+            <a href="{% url 'mock_interview' %}">
+                <div class="action">
+                    <i class="fa-solid fa-video icon-blue"></i>
+                    <h3>Start Mock Interview</h3>
+                    <p>Start a new AI session</p>
+                </div>
+            </a>
+            <a href="{% url 'practice' %}">
+                <div class="action">
+                    <i class="fa-solid fa-file-lines icon-green"></i>
+                    <h3>Practice Questions</h3>
+                    <p>Practice by Topic</p>
+                </div>
+            </a>
+            <a href="{% url 'previous_interviews' %}">
+                <div class="action">
+                    <i class="fa-solid fa-clock-rotate-left icon-orange"></i>
+                    <h3>View History</h3>
+                    <p>Previous Interviews</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
+    <script src="{% static 'js/Dashboard.js' %}"></script>
+    <style>
+    /* Compact Reduced Footer Styles */
+    .premium-footer {
+        background-color: #050505;
+        color: #A3A3A3;
+        font-family: 'Poppins', sans-serif;
+        position: relative;
+        padding: 30px 0 15px;
+        margin-top: 40px;
+    }
+    .footer-divider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        opacity: 0.5;
+    }
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 30px;
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 30px;
+    }
+    @media (max-width: 768px) {
+        .footer-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+    }
+    .footer-brand h2 {
+        color: #FFFFFF;
+        font-size: 20px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+    }
+    .footer-brand h2 i {
+        color: #D4AF37;
+    }
+    .footer-brand p {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+        color: #A3A3A3;
+    }
+    .footer-social {
+        display: flex;
+        gap: 10px;
+    }
+    .footer-social a {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #111;
+        border: 1px solid #333;
+        color: #D4AF37;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 13px;
+        transition: 0.3s;
+    }
+    .footer-social a:hover {
+        background: #D4AF37;
+        color: #000;
+        border-color: #D4AF37;
+    }
+    .footer-col h3 {
+        color: #FFFFFF;
+        font-size: 14px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        display: inline-block;
+    }
+    .footer-col h3::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        width: 100%;
+        height: 1px;
+        background: #D4AF37;
+    }
+    .footer-col ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .footer-col ul li {
+        margin-bottom: 6px;
+    }
+    .footer-col ul li a {
+        color: #A3A3A3;
+        text-decoration: none;
+        font-size: 13px;
+        transition: color 0.3s;
+    }
+    .footer-col ul li a:hover {
+        color: #D4AF37;
+    }
+    .footer-bottom {
+        max-width: 1200px;
+        margin: 20px auto 0;
+        padding: 15px 30px 0;
+        border-top: 1px solid #222;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 12px;
+    }
+    .tech-stack span {
+        color: #D4AF37;
+        font-weight: 500;
+    }
+    </style>
+
+    <footer class="premium-footer">
+        <div class="footer-divider"></div>
+        <div class="footer-container">
+            <!-- Brand Section -->
+            <div class="footer-brand">
+                <h2><i class="fa-solid fa-microchip"></i> AI Interview Assistant</h2>
+                <p>AI-powered mock interviews, real-time feedback, and personalized practice to help you land your dream job.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'mock_interview' %}">Mock Interview</a></li>
+                    <li><a href="{% url 'practice' %}">Practice Questions</a></li>
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'previous_interviews' %}">Interview History</a></li>
+                </ul>
+            </div>
+
+            <!-- Support & Legal -->
+            <div class="footer-col">
+                <h3>Support & Legal</h3>
+                <ul>
+                    <li><a href="{% url 'Contact' %}">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 AI Interview Assistant. All rights reserved.</p>
+            <p class="tech-stack">Built with <span>Python</span> &bull; <span>Django</span> &bull; <span>Gemini AI</span></p>
+        </div>
+    </footer>
+</body>
+
+</html>

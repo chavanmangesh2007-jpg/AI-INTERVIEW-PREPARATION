@@ -1,0 +1,93 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Feedback Management{% endblock %}
+
+{% block extra_css %}
+<style>
+    .badge { padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+    .badge-unread { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    .badge-read { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    
+    .actions { display: flex; gap: 8px; }
+    .btn-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; border: none; cursor: pointer; transition: 0.2s; }
+    .btn-toggle { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+    .btn-toggle:hover { background: #3b82f6; color: #fff; }
+    .btn-del { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .btn-del:hover { background: #ef4444; color: #fff; }
+    
+    .msg-content { background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 8px; font-size: 0.95rem; margin-top: 10px; border-left: 3px solid var(--primary); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>Feedback Management</h1>
+        <p style="color: var(--text-muted); margin-top: 5px;">Review contact messages, user feedback, and suggestions.</p>
+    </div>
+</div>
+
+{% if messages %}
+<div style="margin-bottom: 2rem;">
+    {% for message in messages %}
+    <div style="padding: 1rem; border-radius: 8px; font-weight: 500; margin-bottom: 0.5rem; {% if message.tags == 'success' %}background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);{% else %}background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Sender</th>
+                <th>Subject & Message</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fb in feedback %}
+            <tr>
+                <td style="vertical-align: top; padding-top: 1.5rem;">
+                    <div style="font-weight: 600; color: #fff;">{{ fb.name }}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">
+                        <a href="mailto:{{ fb.email }}" style="color: #60a5fa; text-decoration: none;">{{ fb.email }}</a>
+                    </div>
+                </td>
+                <td style="vertical-align: top; padding-top: 1.5rem;">
+                    <div style="font-weight: 600;">{{ fb.subject|default:"No Subject" }}</div>
+                    <div class="msg-content">{{ fb.message }}</div>
+                </td>
+                <td style="vertical-align: top; padding-top: 1.5rem;">
+                    <span class="badge {% if fb.is_read %}badge-read{% else %}badge-unread{% endif %}">
+                        {% if fb.is_read %}Read{% else %}Unread{% endif %}
+                    </span>
+                </td>
+                <td style="vertical-align: top; padding-top: 1.5rem;">{{ fb.created_at|date:"M d, Y H:i" }}</td>
+                <td style="vertical-align: top; padding-top: 1.5rem;">
+                    <div class="actions">
+                        <form method="POST" action="{% url 'admin_feedback_toggle' fb.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon btn-toggle" title="Mark as {% if fb.is_read %}Unread{% else %}Read{% endif %}">
+                                <i class="fa-solid {% if fb.is_read %}fa-envelope{% else %}fa-envelope-open{% endif %}"></i>
+                            </button>
+                        </form>
+                        <form method="POST" action="{% url 'admin_feedback_delete' fb.id %}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this message?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon btn-del" title="Delete Message"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-muted);">No messages or feedback received yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

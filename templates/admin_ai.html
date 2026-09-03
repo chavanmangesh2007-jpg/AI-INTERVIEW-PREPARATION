@@ -1,0 +1,58 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}AI Management{% endblock %}
+
+{% block extra_css %}
+<style>
+    .qa-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; backdrop-filter: blur(12px); }
+    .q-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .q-text { font-size: 1.1rem; font-weight: 600; color: #fff; }
+    .q-meta { color: var(--text-muted); font-size: 0.85rem; }
+    
+    .answer-box { margin-bottom: 1rem; }
+    .answer-box h4 { font-size: 0.85rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+    .answer-content { background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 8px; font-size: 0.95rem; line-height: 1.5; }
+    .ai-feedback { background: rgba(16, 185, 129, 0.05); border-left: 4px solid #10b981; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div>
+        <h1>AI Management</h1>
+        <p style="color: var(--text-muted); margin-top: 5px;">Monitor AI-generated responses, feedback quality, and platform usage.</p>
+    </div>
+</div>
+
+{% for qa in ai_logs %}
+<div class="qa-card">
+    <div class="q-header">
+        <div>
+            <div class="q-text">Q: {{ qa.question_text }}</div>
+            <div class="q-meta">Candidate: {{ qa.session.user.username }} | Session Topic: {{ qa.session.topic }} | Date: {{ qa.created_at|date:"M d, Y H:i" }}</div>
+        </div>
+        <div style="background: rgba(79, 70, 229, 0.2); color: #818cf8; padding: 5px 12px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">
+            AI Score: {{ qa.score }}/100
+        </div>
+    </div>
+    
+    <div class="answer-box">
+        <h4>User Answer</h4>
+        <div class="answer-content">
+            {{ qa.user_answer|default:"<i style='color: #64748b;'>No answer</i>"|safe }}
+        </div>
+    </div>
+    <div class="answer-box">
+        <h4>AI Feedback Generated</h4>
+        <div class="answer-content ai-feedback">
+            {{ qa.ai_feedback|default:"<i style='color: #64748b;'>No feedback generated</i>"|safe }}
+        </div>
+    </div>
+</div>
+{% empty %}
+<div style="text-align: center; padding: 3rem; color: var(--text-muted); background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border);">
+    No AI interactions found.
+</div>
+{% endfor %}
+
+{% endblock %}
