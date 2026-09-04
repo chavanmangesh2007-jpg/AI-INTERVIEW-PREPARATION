@@ -4,8 +4,7 @@ from .models import UserProfile
 
 class SessionUserMiddleware:
     """
-    Middleware that preserves user authentication across serverless instances (e.g. Vercel lambdas)
-    where ephemeral /tmp/db.sqlite3 databases are isolated per instance.
+    Middleware that preserves user authentication session state across requests.
     """
     def __init__(self, get_response):
         self.get_response = get_response

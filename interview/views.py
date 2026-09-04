@@ -414,77 +414,94 @@ def hr_questions(request):
     }
     return render(request, "HR Question.html", context)
 
+@login_required
 def hr_general(request):
     """HR General Questions Page"""
     return render(request, "HR General.html")
 
+@login_required
 def hr_experience(request):
     """HR Experience Questions Page"""
     return render(request, "HR Experiance.html")
 
+@login_required
 def hr_behavioral(request):
     """HR Behavioral Questions Page"""
     return render(request, "HR Behiveral.html")
 
+@login_required
 def hr_company_fit(request):
     """HR Company Fit Questions Page"""
     return render(request, "HR Company.html")
 
+@login_required
 def hr_career_goals(request):
     """HR Career Goals Questions Page"""
     return render(request, "HR Career.html")
 
 
+@login_required
 def aptitude_questions(request):
     return render(request, "Apitude Question.html")
 
 
+@login_required
 def system_design(request):
     return render(request, "System Design.html")
 
 
+@login_required
 def behavioral_questions(request):
     return render(request, "Practice Behaveral.html")
 
 
+@login_required
 def mixed_practice(request):
     return render(request, "Mixed Practice.html")
 
 
+@login_required
 def company_specific(request):
     return render(request, "Company Specific.html")
 
 
+@login_required
 def most_asked(request):
     return render(request, "Most Asked.html")
 
 
+@login_required
 def saved_questions(request):
-    saved_list = []
-    if request.user.is_authenticated:
-        saved_list = SavedQuestion.objects.filter(user=request.user)
+    saved_list = SavedQuestion.objects.filter(user=request.user)
     return render(request, "Saved Question MI.html", {'saved_questions': saved_list})
 
 
+@login_required
 def Data_Structure(request):
     return render(request, "TQ Data Structure.html")
 
 
+@login_required
 def Algorithms(request):
     return render(request, "TQ Algorithms.html")
 
+@login_required
 def Database(request):
     return render(request, "TQ Database.html")
 
+@login_required
 def Operating_System(request):
     return render(request, "TQ Operating System.html")
 
+@login_required
 def Computer_Networks(request):
     return render(request, "TQ Network.html")
 
+@login_required
 def Oops_Concepts(request):
     return render(request, "TQ oops.html")
 
+@login_required
 def Miscellaneous(request):
     return render(request, "TQ Miscellaneous.html")
 
@@ -509,21 +526,22 @@ def Contact(request):
             email_subject = f"New Contact Message: {subject}"
             email_body = f"Name: {name}\nEmail: {email}\nSubject: {subject}\n\nMessage:\n{message}"
             try:
+                recipient_list = [settings.EMAIL_HOST_USER] if getattr(settings, 'EMAIL_HOST_USER', None) else [settings.DEFAULT_FROM_EMAIL]
                 send_mail(
                     email_subject,
                     email_body,
-                    'aiinterviewprep05@gmail.com',
-                    ['aiinterviewprep05@gmail.com'],
+                    settings.DEFAULT_FROM_EMAIL,
+                    recipient_list,
                     fail_silently=False,
                 )
             except Exception as e:
                 print(f"Error sending email: {e}")
-                messages.error(request, f"Message saved, but failed to send email. Did you configure the Google App Password? Error: {e}")
+                messages.error(request, f"Message saved, but failed to send email. Error: {e}")
                 return redirect("Contact")
                 
             # Send SMS Notification via Twilio
             try:
-                if Client and getattr(settings, 'TWILIO_ACCOUNT_SID', None) and settings.TWILIO_ACCOUNT_SID != 'your-twilio-account-sid-here':
+                if Client and getattr(settings, 'TWILIO_ACCOUNT_SID', None) and settings.TWILIO_ACCOUNT_SID and settings.TWILIO_ACCOUNT_SID != 'your-twilio-account-sid-here':
                     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
                     sms_body = f"New message from {name} ({email}) - {subject}"
                     
@@ -591,25 +609,17 @@ def get_company_questions(request):
 @login_required
 def interview_settings(request):
     """Interview Settings Page"""
-    from django.core.management import call_command
-    from django.db.utils import OperationalError
-    
-    # Auto-apply migrations if they haven't been applied yet
     try:
         setting, created = UserInterviewSetting.objects.get_or_create(user=request.user)
-    except OperationalError:
-        try:
-            call_command('makemigrations', interactive=False)
-            call_command('migrate', interactive=False)
-            setting, created = UserInterviewSetting.objects.get_or_create(user=request.user)
-        except Exception as e:
-            setting = None
-            messages.error(request, f"Database error: {str(e)}")
+    except Exception as e:
+        setting = None
+        messages.error(request, f"Database error: {str(e)}")
 
     if request.method == "POST":
         if setting is None:
             messages.error(request, "Cannot save settings due to a database error.")
             return redirect("Interview_settings")
+
         setting.interview_type = request.POST.get("interview_type", "Technical Interview")
         setting.difficulty_level = request.POST.get("difficulty_level", "Medium")
         setting.interview_duration = request.POST.get("interview_duration", "30 Minutes")

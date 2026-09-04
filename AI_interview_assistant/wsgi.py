@@ -16,10 +16,3 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'AI_interview_assistant.settings
 application = get_wsgi_application()
 
 app = application
-
-if os.getenv('VERCEL') or os.environ.get('VERCEL_ENV'):
-    try:
-        from django.core.management import call_command
-        call_command('migrate', interactive=False)
-    except Exception as e:
-        print(f"Auto migration check: {e}")
